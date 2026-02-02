@@ -1,0 +1,174 @@
+<style>
+    /* Hide Alpine elements until initialized to prevent flash */
+    [x-cloak] {
+        display: none !important;
+    }
+</style>
+
+<div class="py-4 px-10 md:px-0 bg-gradient-to-r from-[#feb82b]/50 via-[#e561a1]/50 to-[#feb82b]/50">
+    <p class="text-center" aria-label="Welcome message">&#128075; All products available are ready to be shipped for the holidays &#128512;</p>
+</div>
+
+<!-- Create a navbar slider with a hamburger icon -->
+<div class="flex flex-col w-full mx-auto pt-5"
+    x-data="{open: false, searchBarButtonOpen: false, searchBarButtonOpenMobile: false}">
+
+    <!-- Navbar Mobile -->
+    <div class="flex items-center justify-between px-4 py-3 md:hidden">
+        <!-- Hamburger icon -->
+        <button class="text-[#2E2D34] focus:outline-none" x-on:click="open = !open" :aria-expanded="open.toString()">
+            <svg class="h-6 w-6" x-show="!open" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                aria-label="Open menu">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <svg class="h-6 w-6" x-show="open" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                aria-label="Close menu">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+
+        <!-- Mobile Logo -->
+        <div class="text-center">
+            <a href="{{ shop.url }}" title="Homepage">
+                {% if section.settings.image == blank %}
+                <img class="w-[120px] h-[120px]" src="{{ 'logo.png' | asset_url }}" alt="My company logo">
+                {% else %}
+                <img class="w-[120px] h-[120px]" src="{{ section.settings.image | img_url: 'master' }}"
+                    alt="My company logo">
+                {% endif %}
+            </a>
+        </div>
+
+        <!-- Mobile Search and Cart -->
+        <div class="flex items-center text-[#2E2D34] space-x-4">
+            <button
+                x-on:click="searchBarButtonOpenMobile = true; $nextTick(() => { document.body.style.overflow = 'hidden'; })"
+                type="button" class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900"
+                aria-label="Open mobile search bar">
+                {% render 'icon-search' %}
+            </button>
+            {% render 'icon-cart' %}
+        </div>
+    </div>
+
+    <!-- Mobile Slider Menu -->
+    <div class="bg-[#FEB82B]/20 md:hidden" x-show="open" x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="transform -translate-x-full" x-transition:enter-end="transform translate-x-0"
+        x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-x-0"
+        x-transition:leave-end="transform -translate-x-full" x-cloak>
+        <div class="flex flex-col px-4 pt-6 space-y-2">
+            {% if linklists.main-menu.links.size > 0 %}
+            {% for link in linklists.main-menu.links %}
+            <a class="font-normal text-black hover:underline underline-offset-4 decoration-1 block px-3 py-2 rounded-md text-base"
+                href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a>
+            {% endfor %}
+            {% else %}
+            <p class="text-black px-3 py-2">No menu links available.</p>
+            {% endif %}
+        </div>
+        <div class="flex px-6 pt-8 pb-6 space-x-4">
+            {% render 'social-media-twitter' %}
+            {% render 'social-media-facebook' %}
+            {% render 'social-media-pinterest' %}
+            {% render 'social-media-instagram' %}
+            {% render 'social-media-tiktok' %}
+        </div>
+    </div>
+
+    <!-- ✅ Desktop Navbar (Full-width, logo perfectly centered) -->
+    <div class="hidden md:flex items-center justify-between w-full mt-4 px-6">
+        <!-- Left side: Nav Links -->
+        <div class="flex-1 flex space-x-8">
+            {% if linklists.main-menu.links.size > 0 %}
+            {% for link in linklists.main-menu.links %}
+            <a class="font-normal text-[#5E5C66] hover:underline underline-offset-4 decoration-1 block py-2 text-lg"
+                href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- Center: Logo -->
+        <div class="flex-shrink-0 mx-auto">
+            <a href="{{ shop.url }}" title="Homepage">
+                {% if section.settings.image == blank %}
+                <img class="w-[180px] h-[180px] md:w-[200px] md:h-[200px]" src="{{ 'logo.png' | asset_url }}"
+                    alt="My company logo">
+                {% else %}
+                <img class="w-[180px] h-[180px] md:w-[200px] md:h-[200px]"
+                    src="{{ section.settings.image | img_url: 'master' }}" alt="My company logo">
+                {% endif %}
+            </a>
+        </div>
+
+        <!-- Right side: Search first, then Cart -->
+        <div class="flex-1 flex justify-end items-center space-x-8">
+            <button
+                x-on:click="searchBarButtonOpen = true; $nextTick(() => { document.body.style.overflow = 'hidden'; })"
+                type="button" class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900"
+                aria-label="Open search bar">
+                {% render 'icon-search' %}
+            </button>
+            {% render 'icon-cart' %}
+        </div>
+    </div>
+    <!-- ✅ End Desktop Navbar -->
+
+    <!-- Search Modal for Desktop -->
+    <div x-show="searchBarButtonOpen" x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50" x-cloak>
+
+        <!-- Close Button pinned to viewport top-right -->
+        <button x-on:click="searchBarButtonOpen = false; document.body.style.overflow = 'auto';"
+            style="position: fixed; top: 1rem; right: 1rem; z-index: 9999; font-size: 2rem; color: black; background: transparent; border: none; cursor: pointer;">
+            ✖
+        </button>
+
+        <div class="bg-white p-4 rounded-md w-3/4 md:w-1/3 relative">
+            <form action="/search" method="get" class="w-full">
+                <input type="text" name="q" placeholder="Search..." class="w-full px-4 py-2 border rounded-md" />
+                <button type="submit" class="mt-2 w-full bg-[#FEB82B] text-white py-2 rounded-md">
+                    Search
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Search Modal for Mobile -->
+    <div x-show="searchBarButtonOpenMobile" x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+        x-transition:leave="transition ease-in duration-300" x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50" x-cloak>
+
+        <!-- Close Button pinned to viewport top-right -->
+        <button x-on:click="searchBarButtonOpenMobile = false; document.body.style.overflow = 'auto';"
+            style="position: fixed; top: 1rem; right: 1rem; z-index: 9999; font-size: 2rem; color: black; background: transparent; border: none; cursor: pointer;">
+            ✖
+        </button>
+
+        <div class="bg-white p-4 rounded-md w-3/4 relative">
+            <form action="/search" method="get" class="w-full">
+                <input type="text" name="q" placeholder="Search..." class="w-full px-4 py-2 border rounded-md" />
+                <button type="submit" class="mt-2 w-full bg-[#FEB82B] text-white py-2 rounded-md">
+                    Search
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+"name": "Logo",
+"settings": [
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image"
+}
+]
+}
+{% endschema %}

@@ -1,0 +1,74 @@
+<div class="container mx-auto">
+    {% paginate search.results by 6 %}
+
+    <h1 class="text-xl my-4 text-center">Search Results</h1>
+
+    <!-- Search Form (hidden by default) -->
+    <div id="searchFormContainer" class="flex justify-center items-center" style="display:none;">
+        <form action="{{ routes.search_url }}" method="get" class="border flex rounded">
+            <input type="search" name="q" placeholder="Search" value="{{ search.terms | escape }}"
+                class="px-4 py-2 w-80 border-none">
+            <button type="submit" class="bg-gray-900 hover:bg-gray-700 text-white border px-4">Search</button>
+        </form>
+    </div>
+
+
+    {% if search.performed %}
+    {% if search.results.size > 0 %}
+    <div class="max-w-6xl mx-auto">
+        <p class="text-gray-500 text-center my-10">
+            {{ search.results.size }} results for the search term "{{ search.terms | escape }}"
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {% for item in search.results %}
+            <a class="w-full" href="{{ item.url | within: item.collections.first }}">
+                <div class="relative group mb-5 mr-5">
+                    <div class="hover:underline underline-offset-2 decoration-white w-full h-80 relative">
+                        <img src="{{ item.featured_image | img_url: 'large' }}" alt="{{ item.title }}"
+                            class="w-full h-[400px] md:h-full object-cover bg-gray-100 rounded-t-2xl transition-opacity duration-300 group-hover:opacity-0">
+
+                        {% assign images = item.images %}
+                        {% if images.size > 1 %}
+                        <img src="{{ images[1].src | img_url: 'large'}}" alt="{{ item.title }} Alternate Image"
+                            class="w-full h-[400px] md:h-full object-cover bg-gray-100 rounded-t-2xl absolute top-0 left-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                        {% endif %}
+
+                        <div
+                            class="text-white hover:underline underline-offset-2 decoration-white text-center py-2 px-6 mt-1 md:mt-0">
+                            <div
+                                class="text-black hover:underline underline-offset-2 decoration-black text-center py-6 px-6 mt-1 md:mt-0">
+                                <h1 class="text-xl">{{ item.title }}</h1>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background-color: #ffffff75"
+                        class="text-center bg-[#f6f6f6] py-10 pt-14 px-10 rounded-b-2xl text-black mt-20 md:mt-0">
+                        {% comment %} Grey box for the collection cards {% endcomment %}
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <div class="text-center my-4">
+        <p>No results found for the search term: "{{ search.terms | escape }}". Try a different keyword.</p>
+    </div>
+    {% endif %}
+    {% endif %}
+
+    {% render 'pagination', pagination: paginate %}
+    {% endpaginate %}
+</div>
+
+<script>
+    const searchToggle = document.getElementById('searchToggle');
+    const searchFormContainer = document.getElementById('searchFormContainer');
+
+    searchToggle.addEventListener('click', () => {
+        searchFormContainer.classList.toggle('hidden');
+        searchFormContainer.querySelector('input').focus();
+    });
+</script>

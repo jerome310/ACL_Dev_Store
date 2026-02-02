@@ -1,0 +1,80 @@
+<div class="flex flex-col md:flex-row md:justify-center mb-32">
+    <div class="w-11/12 mx-auto flex flex-col md:mx-0 md:w-1/4 md:mr-5">
+        {% comment %} 1ST CARD {% endcomment %}
+        <a href="{{ 'products/cameron-card-holder' | url }}">
+            <div class="relative group mb-5">
+                <div class="hover:underline underline-offset-2 decoration-white w-full h-80 relative">
+                    <img src="{{ all_products['cameron-card-holder'].featured_image.src | img_url }}" alt="Cameron Product Image"
+                        class="w-full h-[400px] md:h-full object-cover bg-gray-100 rounded-t-2xl transition-opacity duration-300 group-hover:opacity-0">
+
+                    {% assign images = all_products['cameron-card-holder'].images %}
+                    {% if images.size > 1 %}
+                    <img src="{{ images[1].src | img_url }}" alt="Cameron Alternate Image"
+                        class="w-full h-[400px] md:h-full object-cover bg-gray-100 rounded-t-2xl absolute top-0 left-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    {% endif %}
+
+                    <div
+                        class="text-white hover:underline underline-offset-2 decoration-white text-center py-6 px-6 mt-1 md:mt-0">
+                        <p class="text-xl">{{ all_products['cameron-card-holder'].title }}</p>
+                    </div>
+                </div>
+                <div class="text-center bg-red-900 py-10 pt-14 px-10 rounded-b-2xl text-white mt-20 md:mt-0">
+                    <p class="text-lg">{{ all_products['cameron-card-holder '].price | money }}</p>
+                </div>
+            </div>
+        </a>
+
+
+        {% comment %} 2ND CARD {% endcomment %}
+        <a href="{{ 'products/diana-card-holder' | url }}">
+            <div class="relative group mt-5">
+                <div class="hover:underline underline-offset-2 decoration-white w-full h-80 relative">
+                    <img src="{{ all_products['diana-card-holder'].featured_image.src | img_url }}" alt="Diana Product Image"
+                        class="w-full h-[400px] md:h-full object-cover bg-gray-100 rounded-t-2xl transition-opacity duration-300 group-hover:opacity-0">
+
+                    {% assign images = all_products['diana-card-holder'].images %}
+                    {% if images.size > 1 %}
+                    <img src="{{ images[1].src | img_url }}" alt="Diana Alternate Image"
+                        class="w-full h-[400px] md:h-full object-cover bg-gray-100 rounded-t-2xl absolute top-0 left-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    {% endif %}
+
+                    <div
+                        class="text-white hover:underline underline-offset-2 decoration-white text-center py-6 px-6 mt-1 md:mt-0">
+                        <p class="text-xl">{{ all_products['diana-card-holder'].title }}</p>
+                    </div>
+                </div>
+                <div class="text-center bg-red-900 py-10 pt-14 px-10 rounded-b-2xl text-white mt-20 md:mt-0">
+                    <p class="text-lg">{{ all_products['diana-card-holder'].price | money }}</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+
+    {% comment %} 3RD CARD {% endcomment %}
+    <a href="{{ 'products/rae-card-holder' | url }}">
+        <div class="relative group w-11/12 mx-auto md:w-full mt-10 md:mt-0 md:ml-5">
+            <div class="hover:underline underline-offset-2 decoration-white w-full h-full relative">
+                <img src="{{ all_products['rae-card-holder'].featured_image.src | img_url }}" alt="Rae Product Image"
+                    class="w-full h-[553px] md:w-full md:h-[800px] object-cover bg-gray-100 rounded-t-2xl transition-opacity duration-300 group-hover:opacity-0">
+
+                {% assign images = all_products['rae-card-holder'].images %}
+                {% if images.size > 1 %}
+                <img src="{{ images[1].src | img_url }}" alt="Rae Alternate Image"
+                    class="w-full h-[553px] md:w-full md:h-[800px] object-cover bg-gray-100 rounded-t-2xl absolute top-0 left-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                {% endif %}
+
+                <div
+                    class="text-white bg-red-900 hover:underline underline-offset-2 decoration-white text-center pt-9 px-6">
+                    <div>
+                        <p class="text-xl">{{ all_products['rae-card-holder'].title }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center bg-red-900 py-2 pb-7 px-10 rounded-b-2xl text-white">
+                <p class="text-lg">{{ all_products['rae-card-holder'].price | money }}</p>
+                <!-- Additional content if needed -->
+            </div>
+        </div>
+    </a>
+</div>

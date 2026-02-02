@@ -1,0 +1,168 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Me | The Arcade</title>
+    <meta name="description"
+        content="Learn more about The Arcade. Our story, passion, and mission to create memorable experiences for everyone." />
+    <meta name="keywords" content="About Me, The Arcade, story, mission" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="About Me | The Arcade" />
+    <meta property="og:description"
+        content="Learn more about The Arcade. Our story, passion, and mission to create memorable experiences for everyone." />
+
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'ABeeZee', Arial, sans-serif;
+            background-color: #fff1d5;
+            line-height: 1.5;
+        }
+
+        /* Layout components */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            max-width: 1084px;
+            margin-top: 60px;
+            margin-bottom: 48px;
+            padding: 0 16px;
+        }
+
+        .hero-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 60px;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 508px;
+            height: auto;
+            margin-top: 18px;
+        }
+
+        .events-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            width: 100%;
+        }
+
+        /* Typography */
+        .page-title {
+            font-size: 24px;
+            font-family: 'JejuGothic', Arial, sans-serif;
+            font-weight: 400;
+            line-height: 28px;
+            text-align: center;
+            color: #000000;
+            margin-bottom: 18px;
+        }
+
+        .about-paragraph {
+            font-size: 16px;
+            font-family: 'ABeeZee', Arial, sans-serif;
+            color: #000000;
+            text-align: left;
+        }
+
+        /* Responsive media queries */
+        @media (min-width: 640px) {
+            .content-wrapper {
+                padding: 0 24px;
+                margin-top: 80px;
+            }
+
+            .page-title {
+                font-size: 28px;
+                line-height: 32px;
+            }
+
+            .about-paragraph {
+                font-size: 17px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .content-wrapper {
+                padding: 0 32px;
+                margin-top: 100px;
+            }
+
+            .page-title {
+                font-size: 32px;
+                line-height: 36px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .content-wrapper {
+                margin-top: 142px;
+            }
+
+            .page-title {
+                font-size: 36px;
+                line-height: 40px;
+            }
+
+            .about-paragraph {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="main-container">
+        <div class="content-wrapper">
+            <section class="hero-section">
+                <h1 class="page-title">About Me</h1>
+                <img class="hero-image" src="{{ 'img_acl_bag_image.png' | asset_url }}" alt="About The Arcade">
+            </section>
+
+            <section class="events-list">
+                <p class="about-paragraph">
+                    Welcome to The Arcade! My journey started with a love for community, creativity, and creating spaces
+                    where
+                    people can come together.
+                </p>
+                <p class="about-paragraph">
+                    Over the years, I’ve dedicated myself to organizing events that spark joy, bring families closer,
+                    and inspire
+                    memories that last a lifetime.
+                </p>
+                <p class="about-paragraph">
+                    Whether it’s holiday celebrations, fun game nights, or seasonal festivals, my mission is to make
+                    each event
+                    meaningful and unforgettable.
+                </p>
+            </section>
+        </div>
+    </main>
+</body>
+
+</html>

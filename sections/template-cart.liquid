@@ -1,0 +1,156 @@
+{% if cart.item_count > 0 %}
+<div class="p-4">
+    <div class="max-w-6xl flex flex-col my-10 mx-auto">
+        <div class="flex-1">
+            <div class="flex items-end justify-between my-5">
+                <h1 class="text-3xl">Your cart</h1>
+                <a href="{{ routes.all_products_collection_url }}"
+                    class="text-blue-600 hover:text-blue-800 font-medium underline">Continue shopping</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-6xl flex flex-col my-10 mx-auto">
+        <form action="/cart/update" method="POST" novalidate id="cart-form">
+            <table class="table-auto divide-y divide-black my-4 w-full">
+                <thead>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Product</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Quantity</th>
+                    <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Total Price</th>
+                </thead>
+                <tbody>
+                    {% for item in cart.items %}
+                    <tr class="table-row" data-line="{{ forloop.index }}" data-price="{{ item.price }}">
+                        <td class="pt-4 px-2 flex flex-col justify-center">
+                            <a href="{{ item.url }}">
+                                {% if item.image %}
+                                <img src="{{ item | img_url: 'small' }}" alt="{{ item.title | escape }}"
+                                    class="w-20 h-20 object-cover border">
+                                {% else %}
+                                {{ 'product-1' | placeholder_svg_tag: 'w-20 h-20 object-cover border' }}
+                                {% endif %}
+                            </a>
+                        </td>
+                        <td class="px-2 flex flex-col justify-center">
+                            <a href="{{ item.url }}" class="my-1">{{ item.product.title | truncatewords: 5 }}</a>
+                            <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0"
+                                class="text-sm font-medium text-red-500 my-1">Remove</a>
+                        </td>
+                        <td class="py-4 px-2">
+                            <input type="number" name="updates[]" id="updates_{{ forloop.index }}"
+                                value="{{ item.quantity }}" min="0"
+                                class="cart-qty w-32 px-5 py-2 border rounded-md text-center border-black bg-[#FEF0D4]"
+                                data-line="{{ forloop.index }}">
+                        </td>
+                        <td class="py-4 px-2 line-total">
+                            {{ item.line_price | money }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Cart Notes and Subtotal -->
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="w-full my-4">
+                    <div class="flex flex-col items-start">
+                        <label for="cart_note" class="my-1">Cart notes</label>
+                        <textarea name="note" id="cart_note"
+                            class="w-full md:max-w-lg resize-none border h-20"></textarea>
+                    </div>
+                </div>
+
+                <div class="w-full my-4 md:w-80">
+                    <div id="cart-subtotal">
+                        Subtotal: <span id="subtotal-amount">{{ cart.total_price | money }}</span>
+                    </div>
+
+                    <!-- Checkout Button -->
+                    <div class="my-2">
+                        <a href="/checkout" class="bg-blue-600 text-white px-4 py-2 rounded w-full block text-center">
+                            Checkout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const qtyInputs = document.querySelectorAll(".cart-qty");
+        const subtotalEl = document.getElementById("subtotal-amount");
+
+        // Format money
+        function formatMoney(cents) {
+            if (typeof Shopify !== "undefined" && Shopify.formatMoney) {
+                return Shopify.formatMoney(cents);
+            }
+            return (cents / 100).toLocaleString("en-US", { style: "currency", currency: "USD" });
+        }
+
+        // Recalculate subtotal on cart page
+        function recalcSubtotal() {
+            let subtotal = 0;
+            document.querySelectorAll("tr[data-line]").forEach(row => {
+                const price = parseInt(row.dataset.price);
+                const qty = parseInt(row.querySelector(".cart-qty").value) || 0;
+                const lineTotal = price * qty;
+                subtotal += lineTotal;
+                row.querySelector(".line-total").textContent = formatMoney(lineTotal);
+            });
+            subtotalEl.textContent = formatMoney(subtotal);
+        }
+
+        // Update Shopify cart immediately
+        function updateCart(line, quantity) {
+            fetch('/cart/change.js', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ line, quantity })
+            })
+                .then(res => res.json())
+                .then(cart => {
+                    document.querySelectorAll(".cart-count, [data-cart-count]").forEach(el => {
+                        el.textContent = cart.item_count;
+                    });
+                })
+                .catch(err => console.error(err));
+        }
+
+        qtyInputs.forEach(input => {
+            // Instant subtotal update
+            input.addEventListener("input", recalcSubtotal);
+
+            // Sync with Shopify on change
+            input.addEventListener("change", function () {
+                const line = parseInt(this.dataset.line);
+                const quantity = parseInt(this.value) || 0;
+                updateCart(line, quantity);
+            });
+
+            // Optional: sync on blur for mobile
+            input.addEventListener("blur", function () {
+                const line = parseInt(this.dataset.line);
+                const quantity = parseInt(this.value) || 0;
+                updateCart(line, quantity);
+            });
+        });
+
+        // Initial subtotal
+        recalcSubtotal();
+    });
+</script>
+
+{% else %}
+<div class="max-w-6xl h-60 my-4 mx-auto flex flex-col items-center justify-center">
+    <div class="text-center">
+        <h1 class="text-3xl my-4">Your cart is empty</h1>
+        <div class="my-4 py-4">
+            <a href="{{ routes.all_products_collection_url }}"
+                class="border border-gray-600 text-white bg-gray-600 px-8 py-3">Continue shopping</a>
+        </div>
+    </div>
+</div>
+{% endif %}

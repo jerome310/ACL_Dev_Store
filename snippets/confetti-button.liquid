@@ -1,0 +1,510 @@
+View Cart Button Styles
+<style>
+    @media only screen and (max-width: 600px) {
+
+        /* Your CSS rules for screens up to 600px wide go here */
+        /* For example: */
+        .view-cart {
+            margin-top: 10% !important;
+        }
+    }
+
+    .view-cart {
+        position: relative;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin-top: 7%;
+    }
+
+    .cart-button {
+        display: block;
+        width: 75%;
+        height: 40px;
+        line-height: 40px;
+        font-size: 18px;
+        font-family: sans-serif;
+        text-decoration: none;
+        color: #333;
+        border: 2px solid #333;
+        letter-spacing: 2px;
+        text-align: center;
+        position: relative;
+        transition: all .35s;
+        border: 1px solid black;
+    }
+
+    .cart-button span {
+        position: relative;
+        z-index: 2;
+    }
+
+    .cart-button:after {
+        position: absolute;
+        content: "";
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 100%;
+        background: linear-gradient(to right, #feb82b, #2387ff, #e561a1);
+        transition: all .35s;
+    }
+
+    .cart-button:hover {
+        color: #fff;
+    }
+
+    .cart-button:hover:after {
+        width: 100%;
+    }
+</style>
+
+<body class="bg-gray-200 flex items-center justify-center h-screen">
+    <div style="z-index: 50;" id="productFeature"
+        class="fixed top-0 right-0 transform translate-x-full transition-transform duration-700 ease-in-out bg-white py-4 px-4 shadow-lg w-3/4 md:w-1/4 h-full">
+        <div class="flex justify-between items-center relative px-6">
+            <button id="closeButton" class="absolute top-0 right-0">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    class="h-6 w-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+            </button>
+            <h1 class="text-2xl">Cart</h1>
+        </div>
+        <div class="mt-4 border-b border-solid border-[#CFCFCF]">
+
+        </div>
+
+        {% comment %} productSliderData the container that holds all the code that displays, products, view cart button
+        and subtotal with{% endcomment %}
+        <div class="productSliderData">
+            {% comment %} 1st Card Product {% endcomment %}
+            <div id="productDiv" class="flex justify-around mt-6">
+                <div class="flex flex-row items-center pl-4">
+                    <a href="{{ 'products/cameron' | url }}">
+                        <img src="{{ all_products['cameron'].featured_image.src | img_url: 'large' }}"
+                            alt="Cameron Product Image" class="w-24 h-16 object-cover rounded-lg">
+                    </a>
+                    <div class="flex flex-col">
+                        <p class="text-xl pl-6"><a href="{{ 'products/cameron' | url }}">{{
+                                all_products['cameron'].title }}
+                        </p></a>
+                        <p id="productPrice" data-price="{{ all_products['cameron'].price }}"
+                            class="text-lg text-left pl-6">{{
+                            all_products['cameron'].price | money }}</p>
+                    </div>
+                </div>
+                <div class="flex flex-col mx-2">
+                    <div class="flex justify-between my-8">
+                        <div class="flex items-center">
+                            <button id="decrementButton" type="button"
+                                class="relative left-6 text-gray-500 text-2xl">-</button>
+                            <input id="quantity" name="quantity" value="1" min="1"
+                                class="w-24 py-1 border rounded-md text-center border-black text-xl">
+                            <button id="incrementButton" type="button"
+                                class="relative right-6 text-gray-500 text-2xl">+</button>
+                        </div>
+                        <button id="removeProduct" class="text-sm font-medium text-red-500 my-1 pl-4">remove</button>
+                    </div>
+                </div>
+            </div>
+            {% comment %} 2nd Card Product {% endcomment %}
+            <div id="productDivTwo" class="flex justify-around mt-6">
+                <div class="flex flex-row items-center pl-4">
+                    <a href="{{ 'products/diana' | url }}">
+                        <img src="{{ all_products['diana'].featured_image.src | img_url: 'large' }}"
+                            alt="Diana Product Image" class="w-24 h-16 object-cover rounded-lg">
+                    </a>
+                    <div class="flex flex-col">
+                        <p class="text-xl pl-6"><a href="{{ 'products/diana' | url }}">{{
+                                all_products['diana'].title }}
+                        </p></a>
+                        <p id="productPriceTwo" data-price="{{ all_products['diana'].price }}"
+                            class="text-lg text-left pl-6">{{
+                            all_products['diana'].price | money }}</p>
+                    </div>
+                </div>
+                <div class="flex flex-col mx-2">
+                    <div class="flex justify-between my-8">
+                        <div class="flex items-center">
+                            <button id="decrementButtonTwo" type="button"
+                                class="relative left-6 text-gray-500 text-2xl">-</button>
+                            <input id="quantityTwo" name="quantity" value="1" min="1"
+                                class="w-24 py-1 border rounded-md text-center border-black text-xl">
+                            <button id="incrementButtonTwo" type="button"
+                                class="relative right-6 text-gray-500 text-2xl">+</button>
+                        </div>
+                        <button id="removeProductTwo" class="text-sm font-medium text-red-500 my-1 pl-4">remove</button>
+                    </div>
+                </div>
+            </div>
+            <h3 id="subtotal" class="text-xl text-left pl-4">Subtotal: {{ all_products['cameron'].price | money }}
+            </h3>
+            <button id="view-cart" class="cart-button !h-12 !text-sm !mx-auto !my-16"><span class="text">View
+                    Cart</span></button>
+        </div>
+        <div id="emptyCart">YOUR CART IS EMPTY</div>
+    </div>
+</body>
+
+<script>
+    // Rendering total amount for the subTotal amount within the product slider
+
+    // First Increment Product Amount
+    // document.getElementById('incrementButton').addEventListener('click', function () {
+    //     let quantity = parseInt(quantityInput.value);
+    //     quantity += 1;  // Increment the quantity
+    //     quantityInput.value = quantity.toString();  // Update the quantity input field
+
+    //     let price = parseFloat(document.getElementById('productPrice').dataset.price);
+    //     let totalPrice = (quantity * price) / 100;  // Adjusted for unit discrepancy
+
+    //     // Format the total price with two decimal places
+    //     let formattedTotalPrice = totalPrice.toFixed(2);
+
+    //     // Update the subtotal
+    //     document.getElementById('subtotal').innerText = 'Subtotal: $' + formattedTotalPrice;
+    // });
+
+
+    // Get the quantity input field
+    //let quantityInput = document.getElementById('quantity');
+
+    // Add an event listener for the 'keydown' event
+    // quantityInput.addEventListener('keydown', function (event) {
+    //     if (event.key === 'Enter') {
+    //         event.preventDefault();
+    //         updateCart();
+    //     }
+    // });
+
+    // function updateCart() {
+    //     let quantity = parseInt(quantityInput.value);
+
+    //     // Ensure quantity does not go below 1
+    //     if (quantity < 1) {
+    //         quantity = 1;
+    //         quantityInput.value = quantity.toString();  // Update the quantity input field
+    //     }
+
+    //     let price = parseFloat(document.getElementById('productPrice').dataset.price);
+    //     let totalPrice = (quantity * price) / 100;  // Adjusted for unit discrepancy
+
+    //     // Format the total price with two decimal places
+    //     let formattedTotalPrice = totalPrice.toFixed(2);
+
+    //     // Update the subtotal
+    //     document.getElementById('subtotal').innerText = 'Subtotal: $' + formattedTotalPrice;
+    // }
+
+    // Decrement Amount
+    // document.getElementById('decrementButton').addEventListener('click', function () {
+    //     let quantity = parseInt(quantityInput.value);
+    //     if (quantity > 1) {  // Ensure quantity does not go below 1
+    //         quantity -= 1;  // Decrement the quantity
+    //         quantityInput.value = quantity.toString();  // Update the quantity input field
+
+    //         let price = parseFloat(document.getElementById('productPrice').dataset.price);
+    //         let totalPrice = (quantity * price) / 100;  // Adjusted for unit discrepancy
+
+    //         // Format the total price with two decimal places
+    //         let formattedTotalPrice = totalPrice.toFixed(2);
+
+    //         // Update the subtotal
+    //         document.getElementById('subtotal').innerText = 'Subtotal: $' + formattedTotalPrice;
+    //     }
+    // });
+
+    // Second Input Product Amount
+    // Get the quantity input field for the second product
+    // let quantityInputTwo = document.getElementById('quantityTwo');
+    // let incrementButtonTwo = document.getElementById('incrementButtonTwo');
+    // let decrementButtonTwo = document.getElementById('decrementButtonTwo');
+
+    // // Increment Product Amount for the second product
+    // document.getElementById('incrementButtonTwo').addEventListener('click', function () {
+    //     let quantity = parseInt(quantityInputTwo.value);
+    //     quantity += 1;  // Increment the quantity
+    //     quantityInputTwo.value = quantity.toString();  // Update the quantity input field
+
+    //     let price = parseFloat(document.getElementById('productPriceTwo').dataset.price);
+    //     let totalPrice = (quantity * price) / 100;  // Adjusted for unit discrepancy
+
+    //     // Format the total price with two decimal places
+    //     let formattedTotalPrice = totalPrice.toFixed(2);
+
+    //     // Update the subtotal
+    //     document.getElementById('subtotal').innerText = 'Subtotal: $' + formattedTotalPrice;
+    // });
+
+    // ... rest of your code ...
+
+    // Decrement Amount for the second product
+    // document.getElementById('decrementButtonTwo').addEventListener('click', function () {
+    //     let quantity = parseInt(quantityInputTwo.value);
+    //     if (quantity > 1) {  // Ensure quantity does not go below 1
+    //         quantity -= 1;  // Decrement the quantity
+    //         quantityInputTwo.value = quantity.toString();  // Update the quantity input field
+
+    //         let price = parseFloat(document.getElementById('productPriceTwo').dataset.price);
+    //         let totalPrice = (quantity * price) / 100;  // Adjusted for unit discrepancy
+
+    //         // Format the total price with two decimal places
+    //         let formattedTotalPrice = totalPrice.toFixed(2);
+
+    //         // Update the subtotal
+    //         document.getElementById('subtotal').innerText = 'Subtotal: $' + formattedTotalPrice;
+    //     }
+    // });
+
+    // Add an event listener for the 'keydown' event
+    // quantityInputTwo.addEventListener('keydown', function (event) {
+    //     if (event.key === 'Enter') {
+    //         event.preventDefault();  // Prevent the default action
+
+    //         let quantity = parseInt(quantityInputTwo.value);
+    //         if (quantity >= 1) {  // Ensure quantity does not go below 1
+    //             let price = parseFloat(document.getElementById('productPriceTwo').dataset.price);
+    //             let totalPrice = (quantity * price) / 100;  // Adjusted for unit discrepancy
+
+    //             // Format the total price with two decimal places
+    //             let formattedTotalPrice = totalPrice.toFixed(2);
+
+    //             // Update the subtotal
+    //             document.getElementById('subtotal').innerText = 'Subtotal: $' + formattedTotalPrice;
+    //         }
+    //     }
+    // });
+
+
+    // Function to update the total quantity and total price for both products
+    // function updateTotal() {
+    //     // Check if both product divs are displayed
+    //     if (productDiv.style.display === 'block' && productDivTwo.style.display === 'block') {
+    //         let quantityOne = parseInt(document.getElementById('quantity').value);
+    //         let priceOne = parseFloat(document.getElementById('productPrice').dataset.price);
+
+    //         let quantityTwo = parseInt(document.getElementById('quantityTwo').value);
+    //         let priceTwo = parseFloat(document.getElementById('productPriceTwo').dataset.price);
+
+    //         totalQuantity = quantityOne + quantityTwo;
+    //         totalPrice = ((quantityOne * priceOne) + (quantityTwo * priceTwo)) / 100;
+
+            // Format the total price with two decimal places
+           // let formattedTotalPrice = totalPrice.toFixed(2);
+
+            // Update the subtotal
+    //         document.getElementById('subtotal').innerText = 'Subtotal: $' + formattedTotalPrice;
+    //     }
+    // }
+
+
+    // Add event listeners for the 'click' event on the increment and decrement buttons for both products
+    // incrementButton.addEventListener('click', updateTotal);
+    // decrementButton.addEventListener('click', updateTotal);
+    // incrementButtonTwo.addEventListener('click', updateTotal);
+    // decrementButtonTwo.addEventListener('click', updateTotal);
+
+    // Get the quantity input fields for both products
+
+    // Add an event listener for the 'keydown' event
+    // quantityInput.addEventListener('keydown', function (event) {
+    //     if (event.key === 'Enter') {
+    //         event.preventDefault();
+    //         updateTotal();
+    //     }
+    // });
+
+    // quantityInputTwo.addEventListener('keydown', function (event) {
+    //     if (event.key === 'Enter') {
+    //         event.preventDefault();
+    //         updateTotal();
+    //     }
+    // });
+
+
+
+    // Removing a product and adding a product inside the product slider
+    // Displaying the subTotal amount equal to original shopify product item amount
+    // Displaying "YOUR CART IS EMPTY" when you click the removeProduct button
+
+    //  WORKING ON displaying a message when the cart is empty
+    // let removeProduct = document.getElementById('removeProduct');
+    // let removeProductTwo = document.getElementById('removeProductTwo');
+    // let productSliderData = document.querySelector('.productSliderData');
+    // let addProduct = document.getElementById('slideButton');
+    // let productDiv = document.getElementById('productDiv');
+    // let productDivTwo = document.getElementById('productDivTwo');
+    // let quantity = document.getElementById('quantity');
+    // let subtotal = document.getElementById('subtotal');
+    // let emptyCart = document.getElementById('emptyCart');
+
+    // let addProductTwoClicked = false;
+
+    // Initially hide both product divs
+    //productDiv.style.display = 'none';
+    //productDivTwo.style.display = 'none';
+
+    // Store the original subtotal
+    //let originalSubtotal = subtotal.innerHTML;
+
+    // removeProduct.addEventListener('click', () => {
+    //     if (productDiv) {
+    //         productDiv.style.display = 'none' // Remove the content inside the productDiv
+    //         //productSliderData.style.display = 'none';
+    //     }
+    //     quantity.value = 1; // Set the quantity value to 1
+    //     subtotal.innerHTML = originalSubtotal; // Reset the subtotal to the original value
+    //     checkCartEmpty(); // Check if the cart is empty
+    // })
+
+    // addProduct.addEventListener('click', () => {
+    //     if (productDiv) {
+    //         productSliderData.style.display = 'block';
+    //         productDiv.style.display = 'block'; // Show the div
+    //         if (!addProductTwoClicked) {
+    //             productDivTwo.style.display = 'none'; // Hide the div
+    //         }
+    //     }
+    //     emptyCart.style.display = 'none'; // Hide the empty cart div
+    //     // Call the function to update the total
+    //     updateTotal();
+    });
+
+
+    // window.onload = function () {
+    //     let addProductTwo = document.getElementById('slideButtonTwo');
+    //     addProductTwo.addEventListener('click', () => {
+    //         if (productDivTwo) {
+    //             productSliderData.style.display = 'block';
+    //             productDivTwo.style.display = 'block'; // Show the div
+    //             addProductTwoClicked = true; // Set the flag
+    //         }
+    //         emptyCart.style.display = 'none'; // Hide the empty cart div
+    //         // Call the function to update the total
+    //         updateTotal();
+    //     });
+
+    //     removeProductTwo.addEventListener('click', () => {
+    //         if (productDivTwo) {
+    //             productDivTwo.style.display = 'none' // Remove the content inside the productDiv
+    //             //productSliderData.style.display = 'none';
+    //         }
+    //         quantity.value = 1; // Set the quantity value to 1
+    //         subtotal.innerHTML = originalSubtotal; // Reset the subtotal to the original value
+    //         checkCartEmpty(); // Check if the cart is empty
+    //     })
+    // }
+
+    // function checkCartEmpty() {
+    //     // Check if both productDiv and productDivTwo are not visible
+    //     if ((productDiv.style.display === 'none' || productDiv.style.display === '') &&
+    //         (productDivTwo.style.display === 'none' || productDivTwo.style.display === '')) {
+    //         displayEmptyCart();
+    //     }
+    // }
+
+    // function displayEmptyCart() {
+    //     productSliderData.style.display = 'none';
+    //     emptyCart.style.display = 'flex';
+    //     emptyCart.style.justifyContent = 'center';
+    //     emptyCart.style.alignItems = 'center';
+    //     emptyCart.style.height = '100vh';
+    // }
+
+    // Get the price of the product
+    //let price = parseFloat(subtotal.textContent.replace('Subtotal: ', '').replace('$', ''));
+
+    // adding product to cart page
+
+
+
+    // Logic that combines adding 1 product at a time and also displaying both at the same time
+    // if (productDiv.style.display !== 'none' && productDivTwo.style.display !== 'none') {
+    //         // Both products are displayed
+    //         let quantityElementOne = document.getElementById('quantity');
+    //         let quantityElementTwo = document.getElementById('quantityTwo');
+    //         let productIdOne = '{{ all_products["cameron"].variants.first.id }}';
+    //         let productIdTwo = '{{ all_products["diana"].variants.first.id }}';
+    //     } else {
+    //         // Only one product is displayed
+    //         let currentProductDiv = productDiv.style.display !== 'none' ? productDiv : productDivTwo;
+    //         let quantityElement = document.getElementById(currentProductDiv === productDiv ? 'quantity' : 'quantityTwo');
+    //         let productId = currentProductDiv === productDiv ? '{{ all_products["cameron"].variants.first.id }}' : '{{ all_products["diana"].variants.first.id }}';
+    //     }
+
+
+
+    // This code display both product when they're both in the product slider
+    // document.getElementById('view-cart').addEventListener('click', function () {
+    //         let productDiv = document.getElementById('productDiv');
+    //         let productDivTwo = document.getElementById('productDivTwo');
+
+    //         // Check if both products are currently displayed
+    //         if (productDiv.style.display !== 'none' && productDivTwo.style.display !== 'none') {
+    //             // Corresponding quantity elements and product ids
+    //             let quantityElementOne = document.getElementById('quantity');
+    //             let quantityElementTwo = document.getElementById('quantityTwo');
+    //             let productIdOne = '{{ all_products["cameron"].variants.first.id }}';
+    //             let productIdTwo = '{{ all_products["diana"].variants.first.id }}';
+
+    //             // Add first product to the cart
+    //             let xhrOne = new XMLHttpRequest();
+    //             xhrOne.open('POST', '/cart/add.js', true);
+    //             xhrOne.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    //             xhrOne.onreadystatechange = function () {
+    //                 if (xhrOne.readyState === 4 && xhrOne.status === 200) {
+    //                     // Add second product to the cart
+    //                     let xhrTwo = new XMLHttpRequest();
+    //                     xhrTwo.open('POST', '/cart/add.js', true);
+    //                     xhrTwo.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    //                     xhrTwo.onreadystatechange = function () {
+    //                         if (xhrTwo.readyState === 4 && xhrTwo.status === 200) {
+    //                             window.location.href = '/cart'; // Redirect to the cart page
+    //                         }
+    //                     };
+    //                     let dataTwo = {
+    //                         id: productIdTwo,
+    //                         quantity: quantityElementTwo.value
+    //                     };
+    //                     xhrTwo.send(JSON.stringify(dataTwo));
+    //                 }
+    //             };
+    //             let dataOne = {
+    //                 id: productIdOne,
+    //                 quantity: quantityElementOne.value
+    //             };
+    //             xhrOne.send(JSON.stringify(dataOne));
+    //         }
+    //     });
+
+
+
+    // This code is perfect on displaying 1 product at a time
+    // document.getElementById('view-cart').addEventListener('click', function () {
+    //         let productDiv = document.getElementById('productDiv');
+    //         let productDivTwo = document.getElementById('productDivTwo');
+
+    //         // Determine which product is currently displayed
+    //         let currentProductDiv = productDiv.style.display !== 'none' ? productDiv : productDivTwo;
+
+    //         // Corresponding quantity element and product id
+    //         let quantityElement = currentProductDiv === productDiv ? document.getElementById('quantity') : document.getElementById('quantityTwo');
+    //         let productId = currentProductDiv === productDiv ? '{{ all_products["cameron"].variants.first.id }}' : '{{ all_products["diana"].variants.first.id }}';
+
+    //         let xhr = new XMLHttpRequest();
+    //         xhr.open('POST', '/cart/add.js', true);
+    //         xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    //         xhr.onreadystatechange = function () {
+    //             if (xhr.readyState === 4 && xhr.status === 200) {
+    //                 window.location.href = '/cart'; // Redirect to the cart page
+    //             }
+    //         };
+    //         let quantity = quantityElement.value;
+    //         let data = {
+    //             id: productId,
+    //             quantity: quantity
+    //         };
+    //         xhr.send(JSON.stringify(data));
+    //     });
+</script>

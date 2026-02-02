@@ -1,0 +1,103 @@
+<div class="flex flex-col md:flex-row md:justify-center mb-32">
+    <div class="w-11/12 mx-auto flex flex-col md:mx-0 md:w-1/4 md:mr-5">
+        {% comment %} 1ST CARD {% endcomment %}
+        <a href="{{ 'products/blue-mini-milled-bag-wallet' | url }}">
+            <div class="relative group mb-5">
+                <div class="hover:underline underline-offset-2 decoration-white w-full h-80 relative">
+                    <img src="{{ all_products['blue-mini-milled-bag-wallet'].featured_image.src | img_url: 'large' }}"
+                        alt="Blue Mini Milled Bag Wallet Product Image"
+                        class="w-full h-[400px] md:h-full object-cover bg-gray-100 rounded-t-2xl transition-opacity duration-300 group-hover:opacity-0">
+        
+                    {% assign images = all_products['blue-mini-milled-bag-wallet'].images %}
+                    {% if images.size > 1 %}
+                    <img src="{{ images[1].src | img_url: 'large' }}" alt="Blue Mini Milled Bag Wallet Alternate Image"
+                        class="w-full h-[400px] md:h-full object-cover bg-gray-100 rounded-t-2xl absolute top-0 left-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    {% endif %}
+        
+                    <div
+                        class="text-black hover:underline underline-offset-2 decoration-white text-center py-6 px-6 mt-1 md:mt-0">
+                        <p class="text-xl">{{ all_products['blue-mini-milled-bag-wallet'].title }}</p>
+                    </div>
+                </div>
+                <div style="background-color: #ffffff75"
+                    class="text-center pt-16 pb-10 px-10 rounded-b-2xl text-black mt-20 md:mt-0">
+                    <p class="text-lg mb-4">{{ all_products['blue-mini-milled-bag-wallet'].price | money }}</p>
+                    <button id="slideButton" class="addProduct py-2 border-solid border-2 border-black px-4 rounded-full">Add to
+                        cart</button>
+                    {% comment %} {% render 'confetti-button' %} {% endcomment %}
+                </div>
+            </div>
+        </a>
+
+
+
+
+
+        {% comment %} 2ND CARD {% endcomment %}
+        <a href="{{ 'products/Strawberry-card-holder' | url }}">
+            <div class="relative group mt-5">
+                <div class="hover:underline underline-offset-2 decoration-white w-full h-80 relative">
+                    <img src="{{ all_products['Strawberry-card-holder'].featured_image.src | img_url: 'large' }}" alt="Cameron Product Image"
+                        class="w-full h-[400px] md:h-full object-cover bg-gray-100 rounded-t-2xl transition-opacity duration-300 group-hover:opacity-0">
+
+                    {% assign images = all_products['Strawberry-card-holder'].images %}
+                    {% if images.size > 1 %}
+                    <img src="{{ images[1].src | img_url: 'large' }}" alt="Strawberry-card-holder Alternate Image"
+                        class="w-full h-[400px] md:h-full object-cover bg-gray-100 rounded-t-2xl absolute top-0 left-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    {% endif %}
+
+                    <div
+                        class="text-black hover:underline underline-offset-2 decoration-white text-center py-6 px-6 mt-1 md:mt-0">
+                        <p class="text-xl">{{ all_products['Strawberry-card-holder'].title }}</p>
+                    </div>
+                </div>
+                <div style="background-color: #ffffff75"
+                class="text-center pt-16 pb-10 px-10 rounded-b-2xl text-black mt-20 md:mt-0">
+                    <p class="text-lg mb-4">{{ all_products['Strawberry-card-holder'].price | money }}</p>
+                    <button id="slideButtonTwo" class="addProduct py-2 border-solid border-2 border-black px-4 rounded-full">Add to
+                        cart</button>
+                    {% comment %} {% render 'confetti-button' %} {% endcomment %}
+                </div>
+            </div>
+        </a>
+    </div>
+
+
+    {% comment %} 3RD CARD {% endcomment %}
+<a href="{{ 'products/polka-dot-medium-crossbody-bag' | url }}">
+    <div class="relative group w-11/12 mx-auto md:w-full mt-10 md:mt-0 md:ml-5">
+        <div class="hover:underline underline-offset-2 decoration-white w-full h-full relative">
+            <img src="{{ all_products['polka-dot-medium-crossbody-bag'].featured_image.src | img_url: 'large' }}"
+                alt="Polka Dot Medium Crossbody Bag Product Image"
+                class="w-full h-[553px] md:w-full md:h-[800px] object-cover bg-gray-100 rounded-t-2xl transition-opacity duration-300 group-hover:opacity-0">
+
+            {% assign images = all_products['polka-dot-medium-crossbody-bag'].images %}
+            {% if images.size > 1 %}
+            <img src="{{ images[1].src | img_url: 'large' }}" alt="Polka Dot Medium Crossbody Bag Alternate Image"
+                class="w-full h-[553px] md:w-full md:h-[800px] object-cover bg-gray-100 rounded-t-2xl absolute top-0 left-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            {% endif %}
+
+        </div>
+        <div style="background-color: #ffffff75" class="text-center py-14 px-10 rounded-b-2xl text-black md:mt-0">
+            <div class="text-black hover:underline underline-offset-2 decoration-white text-center px-6 py-4">
+                <p class="text-xl">{{ all_products['polka-dot-medium-crossbody-bag'].title }}</p>
+            </div>
+            <p class="text-lg mb-4">{{ all_products['polka-dot-medium-crossbody-bag'].price | money }}</p>
+            <button id="slideButtonTwo" class="addProduct py-2 border-solid border-2 border-black px-4 rounded-full">Add
+                to
+                cart</button>
+            {% comment %} {% render 'confetti-button' %} {% endcomment %}
+        </div>
+    </div>
+</a>
+</div>
+
+{% schema %}
+{
+"name": "Variety-Products-Card",
+"settings": [],
+"presets": [{
+"name": "Variety-Products"
+}]
+}
+{% endschema %}

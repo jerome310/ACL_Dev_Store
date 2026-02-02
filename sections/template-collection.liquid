@@ -1,0 +1,45 @@
+<div class="px-4 py-8">
+    {% paginate collection.products by section.settings.number_of_products_per_page %}
+    <h1 class="text-3xl text-center">{{ collection.title }}</h1>
+
+    <div class="max-w-6xl mx-auto mt-10">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-10">
+            {% if collection.handle == 'mini-bag-collection' or collection.handle == 'crossbody-collection' or collection.handle ==
+            'tote-collection' or collection.handle == 'keychain-collection' or collection.handle == 'all' %}
+            {% for product in collection.products %}    
+            <a href="{{ product.url | within: collection }}">
+                <div class="flex flex-col w-3/4 md:w-full mx-auto pb-8">
+                    <img src="{{ product.images.first | img_url: 'grande' }}" alt="{{ product.title | escape }}"
+                        class="w-full object-cover bg-gray-100 rounded-t-2xl transition-opacity duration-300 group-hover:opacity-0">
+    
+                    <div style="background-color: #ffffff75"
+                        class="text-center bg-[#f6f6f6] py-4 px-10 rounded-b-2xl text-black mt-0">
+                        <p class="text-center">{{ product.title }}</p>
+                        <p class="py-2">{{product.price | money}}</p>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+
+
+    {% render 'pagination', pagination: paginate %}
+    {% endpaginate %}
+</div>
+
+{% schema %}
+{
+"name": "Template Collection",
+"settings": [
+{
+"type": "number",
+"id": "number_of_products_per_page",
+"default": 6,
+"label": "Number of products per page"
+}
+]
+}
+{% endschema %}
