@@ -1,0 +1,105 @@
+<style>
+    /* ===============================
+   Desktop Navbar
+================================= */
+
+.navbar {
+    display: none; /* hidden by default */
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1rem 2rem;
+    margin-top: 1rem;
+}
+
+/* Show on desktop */
+@media (min-width: 768px) {
+    .navbar {
+        display: flex;
+    }
+}
+
+.nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 75%;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem; /* replaces space-x-8 */
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; /* replaces gap-3 */
+    font-size: 1.125rem; /* replaces text-lg */
+    font-weight: 400;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 0.5rem 0;
+    position: relative;
+}
+
+/* Underline hover effect */
+.nav-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+/* Arrow */
+.nav-arrow {
+    width: 16px;
+    height: 16px;
+}
+
+/* Icons */
+.nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+</style>
+
+<!-- ✅ Desktop Navbar -->
+<div class="navbar">
+
+    <!-- NAV AREA -->
+    <div class="nav-inner">
+
+        <!-- Left Link Group -->
+        <div class="nav-links nav-left">
+            {% for link in linklists.main-menu.links %}
+            {% if forloop.index <= 3 %} <a class="nav-link" href="{{ link.url }}">
+                <span>{{ link.title }}</span>
+
+                {% if link.links.size > 0 %}
+                <img src="{{ 'down-arrow.png' | asset_url }}" alt="navbar down arrows" class="nav-arrow">
+                {% endif %}
+                </a>
+                {% endif %}
+                {% endfor %}
+        </div>
+
+        <!-- Right Link Group -->
+        <div class="nav-links nav-right">
+            {% for link in linklists.main-menu.links %}
+            {% if forloop.index > 3 %}
+            <a class="nav-link secondary" href="{{ link.url }}">
+                {{ link.title }}
+            </a>
+            {% endif %}
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <!-- ICONS -->
+    <div class="nav-icons">
+        {% render 'icon-search' %}
+        {% render 'icon-cart' %}
+    </div>
+
+</div>

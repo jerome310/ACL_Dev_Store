@@ -24,9 +24,13 @@
   <link rel="icon" href="{{ 'favicon.ico' | file_url }}">
 </head>
 
-<body class="bg-[#FEB82B]/20 font-comic">
+<body class="bg-[#FFFFFF] font-comic">
   {% unless template.name == '404' %}
-  {% section 'navbar' %}
+  {% section 'top-banner' %}
+  {% endunless %}
+
+  {% unless template.name == '404' or template.name == 'index' %}
+  {% render 'video-navbar' %}
   {% endunless %}
 
   <main role="main">
