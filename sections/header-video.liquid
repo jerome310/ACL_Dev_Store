@@ -1,4 +1,9 @@
 <style>
+    body {
+        font-family: 'Lato', sans-serif;
+        text-align: center;
+    }
+
     .video-wrapper {
         position: relative;
         width: 100%;
@@ -23,9 +28,35 @@
         position: absolute;
         z-index: 2;
         color: white;
-        top: 50%;
+        top: 120px;
+        /* adjust this */
         left: 50%;
-        transform: translate(-50%, -50%);
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        /* stack items vertically */
+        align-items: center;
+        /* optional: centers horizontally */
+        gap: 20px;
+        /* 👈 controls space between each element */
+    }
+
+    .hero-content h2 {
+        font-size: 25px;
+        margin-top: 50px;
+    }
+
+    .hero-content h1 {
+        font-family: 'Arapey', serif;
+        font-size: 60px;
+    }
+
+    .header-button {
+        margin-top: 10px;
+        background: #ffffff;
+        font-size: 20px;
+        padding: 10px 30px;
+        color: #000000;
     }
 
     .video-navbar-wrapper {
@@ -34,6 +65,13 @@
         left: 0;
         width: 100%;
         z-index: 3;
+    }
+
+    .site-logo {
+        height: 300px;
+        width: 100%;
+        display: block;
+        /* border: 2px solid red; */
     }
 </style>
 
@@ -51,6 +89,9 @@
     <div class="video-overlay"></div>
 
     <div class="hero-content">
-        <h1>Flairy</h1>
+        <img src="{{ 'ACL-New-logo.svg' | asset_url }}" class="site-logo">
+        <h2>New Collection</h2>
+        <h1>TIMELESS LEATHER GOODS</h1>
+        <a class="header-button" href="#" target="_blank" alt="shop button">Shop Now</a>
     </div>
 </div>

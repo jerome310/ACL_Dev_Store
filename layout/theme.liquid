@@ -13,11 +13,8 @@
   {% comment %} {{ 'application.js' | asset_url | script_tag }} {% endcomment %}
   <script src="{{'application.js' |  asset_url }}" defer="defer"></script>
   <script src="//unpkg.com/alpinejs" defer></script>
-
-
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
-  </style>
+  {% comment %} Font Families Lato & Arapey {% endcomment %}
+  <link href="https://fonts.googleapis.com/css2?family=Arapey:ital@0;1&family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="512x512" href="{{ 'favicon_512x512.png' | asset_url }}">
   <link rel="apple-touch-icon" sizes="512x512" href="{{ 'favicon_512x512.png' | asset_url }}">
