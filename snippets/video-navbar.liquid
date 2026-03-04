@@ -61,12 +61,24 @@
     }
 
     .nav-icons button svg {
-    display: inline-flex;       /* ensures SVG shows up */
-    vertical-align: middle;     /* aligns with other icons */
-    width: 24px;                /* control size */
-    height: 24px;               /* control size */
-    color: white;               /* Tailwind may also use text-white */
-}
+        display: inline-flex;
+        /* ensures SVG shows up */
+        vertical-align: middle;
+        /* aligns with other icons */
+        width: 24px;
+        /* control size */
+        height: 24px;
+        /* control size */
+        color: white;
+        /* Tailwind may also use text-white */
+    }
+
+    /* Mobile search button */
+    .mobile-search-button svg {
+        color: white;
+        width: 24px;
+        height: 24px;
+    }
 </style>
 
 <div x-data="{open: false, searchBarButtonOpen: false, searchBarButtonOpenMobile: false}" x-init="
@@ -104,7 +116,8 @@
 
         <!-- Mobile Icons -->
         <div class="flex items-center space-x-4">
-            <button @click="searchBarButtonOpenMobile = true; document.body.style.overflow='hidden'">
+            <button class="mobile-search-button"
+                @click="searchBarButtonOpenMobile = true; document.body.style.overflow='hidden'">
                 {% render 'icon-search' %}
             </button>
             {% render 'icon-cart' %}
@@ -156,12 +169,12 @@
         </div>
 
         <!-- Icons -->
-    <div class="nav-icons flex items-center gap-8">
-        <button @click="searchBarButtonOpen = true; document.body.style.overflow='hidden'">
-            {% render 'icon-search' %}
-        </button>
-        {% render 'icon-cart' %}
-    </div>
+        <div class="nav-icons flex items-center gap-8">
+            <button @click="searchBarButtonOpen = true; document.body.style.overflow='hidden'">
+                {% render 'icon-search' %}
+            </button>
+            {% render 'icon-cart' %}
+        </div>
 
     </div>
 
@@ -169,13 +182,13 @@
     <!-- ================= SEARCH MODAL ================= -->
     <div x-show="searchBarButtonOpen || searchBarButtonOpenMobile"
         class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50" x-cloak>
-    
+
         <!-- CLOSE BUTTON -->
         <button @click="searchBarButtonOpen=false; searchBarButtonOpenMobile=false; document.body.style.overflow='auto'"
             class="fixed top-4 right-4 text-2xl text-white z-[60]">
             ✖
         </button>
-    
+
         <!-- WHITE MODAL BOX -->
         <div class="bg-white p-4 rounded-md w-3/4 md:w-1/3">
             <form action="/search" method="get">
@@ -185,7 +198,7 @@
                 </button>
             </form>
         </div>
-    
+
     </div>
 
 </div>
