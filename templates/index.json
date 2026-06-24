@@ -1,0 +1,29 @@
+{
+    "sections": {
+        "product-slider": {
+            "type": "product-slider",
+            "settings": {}
+        },
+        "homepage-hero": {
+            "type": "homepage-hero",
+            "settings": {}
+        },
+        "collection-line": {
+            "type": "collection-line",
+            "settings": {}
+        },
+        "gradient-message": {
+            "type": "gradient-message",
+            "settings": {}
+        },
+        "variety-product-card": {
+            "type": "variety-product-card",
+            "settings": {}
+        },
+        "four-column-description": {
+            "type": "four-column-description",
+            "settings": {}
+        }
+    },
+    "order": ["product-slider","homepage-hero","collection-line","gradient-message", "variety-product-card", "four-column-description"]
+}

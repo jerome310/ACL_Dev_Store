@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Popup Modal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Ensuring the modal appears in front of everything */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            /* Increased z-index to ensure it sits above other content */
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            overflow-y: auto;
+            max-height: 101vh;
+            padding: 100px 0;
+        }
+
+        /* Ensure modal content stays in front of other page elements */
+        .modal-content {
+            z-index: 9999;
+            /* Higher z-index to ensure modal content is in front of the modal background */
+            display: flex;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 80%;
+            max-width: 800px;
+        }
+
+        /* Other modal styles unchanged */
+        .modal-image {
+            flex: 1;
+            background-image: url('https://via.placeholder.com/400');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 300px;
+        }
+
+        .modal-form {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-form img {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+
+        .modal-form h2 {
+            margin: 0 0 10px;
+        }
+
+        .modal-form input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .modal-form button {
+            color: black;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .modal-form #email-submit {
+            background-color: #2784FE;
+            padding: 10px 20px;
+            color: white;
+        }
+
+        .modal-form #email-submit:hover {
+            background-color: #004187;
+        }
+
+        @media (max-width: 500px) {
+            .modal-content {
+                position: relative;
+                top: 10%;
+            }
+        }
+
+        /* Smallest Mobile Devices on the background for the modal popup */
+        @media (max-width: 320px) {
+            .modal {
+                max-height: 111vh;
+            }
+        }
+
+        /* Targetting mobile devices 360px */
+        @media (max-width: 360px) {
+            .close-mobile-button {
+                position: absolute !important;
+                top: 50px !important;
+            }
+        }
+
+        /* Targetting mobile devices 375px - 380px */
+        @media (min-width: 375px) and (max-width: 380px) {
+            .close-mobile-button {
+                position: absolute !important;
+                top: 100px !important;
+            }
+        }
+
+        /* Targetting mobile devices 390px - 430px */
+        @media (min-width: 390px) and (max-width: 431px) {
+            .close-mobile-button {
+                position: absolute !important;
+                top: 50px !important;
+            }
+        }
+
+        /* Media query for screens 768px and larger */
+        @media (min-width: 768px) {
+            #email-popup-product {
+                height: 500px;
+                /* Set height to 470px */
+                object-fit: cover;
+                /* Ensure the image covers the container */
+            }
+        }
+
+        /* Prevent scrolling on the body when the modal is open */
+        .no-scroll {
+            overflow: hidden;
+        }
+
+        /* Desktop modal content (additional styling for larger screens) */
+        #emailModal {
+            position: fixed;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            /* Example for the modal background */
+            display: none;
+            /* Hidden by default */
+            transition: opacity 0.5s ease-in;
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+{% comment %} <body>
+
+    <div class="modal" id="emailModal">
+        <div class="modal-content flex flex-col md:flex-row">
+            <div class="modal-image relative">
+                <!-- Close button positioned at the top left corner over the image for mobile -->
+                <button id="close-mobile-button" class="close-mobile-button block md:hidden" aria-label="Close Modal"
+                    style="position: absolute; top: 120px; font-size: 25px; right: 25px; z-index: 100; color: white;">✖</button>
+                <!-- Image that should be displayed -->
+                <img id="email-popup-product"
+                    class="w-full h-full mx-auto md:mx-0 rounded-t-2xl md:rounded-s-2xl md:rounded-tr-none"
+                    src="{{ 'acl_product_image.jpeg' | asset_url }}" alt="acl product image">
+
+            </div>
+            <div class="modal-form text-center" style="position: relative;">
+                <img style="width: 150px; height: 150px;" class="mx-auto" src="{{ 'acl_logo.png' | asset_url }}"
+                    alt="acl product image"> <!-- Placeholder logo -->
+                <button id="close-desktop-button" class="close-desktop-button hidden md:block" aria-label="Close Modal"
+                    style="position: relative; z-index: 0; bottom: 40%; left: 40%; font-size: 24px; padding: 10px;">✖</button>
+                <h2>Subscribe to Our Newsletter</h2>
+                <p>Get the latest updates and exclusive offers!</p>
+                {% form 'customer' %}
+                <input id="email-input" type="email" name="contact[email]" placeholder="Email Address" required>
+                <input id="phone-input" type="tel" name="contact[phone]" placeholder="Phone Number">
+                <button id="email-submit" type="submit">Subscribe</button>
+                {% endform %}
+            </div>
+        </div>
+    </div>
+
+<script>
+      document.addEventListener('DOMContentLoaded', () => {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email regex
+            const phoneRegex = /^(?:\+?\d{1,3}[-. ]?)?(?:\(?\d{3}\)?[-. ]?)?\d{3}[-. ]?\d{4}$/;
+
+            const emailModal = document.getElementById('emailModal');
+            const closeModalBtnDesktop = document.getElementById('close-desktop-button');
+            const closeModalBtnMobile = document.getElementById('close-mobile-button');
+            const emailSubmitButton = document.getElementById('email-submit'); // Fixed ID to match HTML
+            const body = document.body;
+
+            function disableScroll() {
+                body.classList.add('no-scroll');
+            }
+
+            function enableScroll() {
+                body.classList.remove('no-scroll');
+            }
+
+            function showModal() {
+                emailModal.style.display = 'flex';
+                setTimeout(() => {
+                    emailModal.style.transition = 'opacity 0.5s ease-in';
+                    emailModal.style.opacity = '1';
+                }, 100);
+                disableScroll();
+            }
+
+            function closeModal() {
+                emailModal.style.opacity = '0';
+                setTimeout(() => {
+                    emailModal.remove();
+                    enableScroll();
+                }, 500);
+            }
+
+            closeModalBtnDesktop.addEventListener('click', closeModal);
+            closeModalBtnMobile.addEventListener('click', closeModal);
+
+            function validateEmail() {
+                const emailInput = document.getElementById('email-input');
+                const email = emailInput.value;
+                if (email.trim() === "") {
+                    emailInput.style.border = "1px solid red";
+                    emailInput.placeholder = "Email Address is required";
+                    return false;
+                } else if (!emailRegex.test(email)) {
+                    emailInput.value = "";
+                    emailInput.placeholder = "Invalid Email Address";
+                    emailInput.style.border = "1px solid red";
+                    return false;
+                } else {
+                    emailInput.style.border = "";
+                    emailInput.placeholder = "Email Address";
+                }
+                return true;
+            }
+
+            function validatePhone() {
+                const phoneInput = document.getElementById('phone-input');
+                const phone = phoneInput.value;
+                if (phone.trim() !== "" && !phoneRegex.test(phone)) {
+                    phoneInput.value = "";
+                    phoneInput.placeholder = "Invalid Phone Number";
+                    phoneInput.style.border = "1px solid red";
+                    return false;
+                } else {
+                    phoneInput.style.border = "";
+                    phoneInput.placeholder = "Phone Number";
+                }
+                return true;
+            }
+
+            // Prevent modal from showing again after subscribing
+            emailSubmitButton.addEventListener('click', (event) => {
+                if (!validateEmail() || !validatePhone()) {
+                    event.preventDefault(); // Prevent form submission if validation fails
+                    return;
+                }
+
+                // Save to localStorage so modal doesn't show again
+                localStorage.setItem('subscribed', 'true');
+            });
+
+            // Show modal only if the user has NOT subscribed
+            if (!localStorage.getItem('subscribed')) {
+                showModal();
+            }
+        });
+</script> {% endcomment %}
+    
+</body>
+
+</html>

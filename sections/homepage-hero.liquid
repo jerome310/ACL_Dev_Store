@@ -1,0 +1,68 @@
+<style>
+    .handcrafted {
+        text-shadow: -1px -1px 0 red, 1px -1px 0 red, -1px 1px 0 red, 1px 1px 0 red;
+    }
+
+    .quality {
+        text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
+    }
+
+    .unique {
+        text-shadow: -1px -1px 0 #2784FE, 1px -1px 0 #2784FE, -1px 1px 0 #2784FE, 1px 1px 0 #2784FE;
+    }
+</style>
+
+<!-- Header Gradient Section -->
+<div style="margin-top:50px;"
+    class="flex flex-col-reverse md:flex-row justify-center items-center max-w-xs sm:max-w-md md:max-w-screen-lg mx-auto">
+    <!-- Color Boxes -->
+    <div class="flex flex-col md:flex-row flex-wrap items-center justify-center mx-auto gap-4 w-full">
+
+        <!-- Handcrafted Section -->
+        <div class="bg-[#feb82b] py-3 px-6 mb-4 shadow-[6px_6px_2px_-2px_#2280fa] w-full md:w-3/4">
+            <h2 class="handcrafted font-bold text-white text-center text-3xl md:text-4xl">HANDCRAFTED</h2>
+        </div>
+
+        <!-- Quality Section -->
+        <div
+            class="bg-[#fede8c] py-3 px-6 shadow-[6px_6px_2px_-2px_#2A3F54] transform rotate-[5deg] z-40 mb-4 w-full md:w-3/4">
+            <h2 class="quality font-bold text-[#2784FE] text-center text-3xl md:text-4xl">HAND-STITCHED</h2>
+            <p class="text-center text-sm md:text-base">"No sewing machine" 😊</p>
+        </div>
+
+        <!-- Unique Section -->
+        <div
+            class="relative mt-2 bg-[#e561a1] py-3 px-6 shadow-[6px_6px_2px_-2px_#61e5dc] transform rotate-[-5deg] w-full md:w-3/4">
+            <h2 class="unique font-bold text-[#FEDE8C] text-center text-3xl md:text-4xl">UNIQUE LEATHER GOODS</h2>
+        </div>
+    </div>
+
+    <!-- Wallet Image -->
+    <div class="mb-16 md:mb-0 flex justify-center mx-auto">
+        {% if section.settings.image == blank %}
+        <img class="w-[375px] sm:w-[375px] md:w-[500px] h-auto" src="{{ 'home_img.jpg' | asset_url }}"
+            alt="Ceo holding totebag">
+        {% else %}
+        <img class="w-[100px] sm:w-[150px] md:w-[175px] h-auto" src="{{ section.settings.image | img_url: 'master' }}"
+            alt="My company logo">
+        {% endif %}
+    </div>
+</div>
+
+<!-- ACL BUTTON -->
+<div class="w-3/4 mx-auto">
+    {% render 'homepage-button' %}
+</div>
+
+{% schema %}
+{
+"name": "Hero Image",
+"settings": [
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image"
+}
+]
+}
+{% endschema %}

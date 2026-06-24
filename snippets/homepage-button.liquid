@@ -1,0 +1,88 @@
+<style>
+    @media only screen and (max-width: 600px) {
+
+        /* Your CSS rules for screens up to 600px wide go here */
+        /* For example: */
+        .wrapper {
+            margin-top: 20% !important;
+        }
+
+        .button {
+            width: 75% !important;
+            height: 60px;
+        }
+    }
+
+     @media only screen and (min-width: 601px) {
+       .button {
+        display: block;
+        width: 50% !important;
+        max-width: 50% !important;
+        }
+     }
+
+    .wrapper {  
+        position: relative;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin-top: 7%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .button {
+        display: block;
+        /* width: 40%; */
+        height: 60px;
+        line-height: 40px;
+        font-size: 18px;
+        text-decoration: none;
+        color: #333;
+        border: 2px solid #333;
+        letter-spacing: 2px;
+        text-align: center;
+        position: relative;
+        transition: all .35s;
+        border: 1px solid black;
+        border-radius: 999px;
+    }
+
+    .button span {
+        position: relative;
+        z-index: 2;
+        font-size: 23px;
+    }
+
+    .button:before {
+        border-radius: 999px;
+    }
+
+    .button:after {
+        position: absolute;
+        content: "";
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 100%;
+        background: linear-gradient(to right, #feb82b, #2387ff, #e561a1);
+        transition: all .35s;
+        border-radius: 999px;
+    }
+
+    .button:hover {
+        color: #fff;
+    }
+
+    .button:hover:after {
+        width: 100%;
+    }
+</style>
+
+
+<a href="{{ collections.all.url }}">
+    <div class="wrapper">
+        <button type="submit" class="button"><span>View Products</span></button>
+    </div>
+</a>

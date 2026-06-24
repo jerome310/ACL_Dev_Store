@@ -1,0 +1,100 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Me | My Story</title>
+    <meta name="description"
+        content="Learn more about The Arcade. Our story, passion, and mission to create memorable experiences for everyone." />
+    <meta name="keywords" content="About Me, The Arcade, story, mission" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="About Me | The Arcade" />
+    <meta property="og:description"
+        content="Learn more about The Arcade. Our story, passion, and mission to create memorable experiences for everyone." />
+    {% comment %} Montserrat Fonts {% endcomment %}
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    {% comment %} Alegreya Fonts {% endcomment %}
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        .hero {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* 🔥 Wrap CEO image + text together */
+        .ceo-wrapper {
+            position: absolute;
+            top: 15%;
+            left: 10%;
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+            /* 🔥 increase this */
+        }
+
+        .ceo-name-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* CEO Image */
+        .ceo-image {
+            width: 300px;
+            height: auto;
+            border-radius: 12px;
+        }
+
+        /* 🔥 Text styling */
+        .ceo-intro-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 25px;
+            font-weight: 500;
+        }
+
+        .ceo-intro-name {
+            font-family: 'Alegreya', sans-serif;
+            font-size: 45px;
+            font-weight: 500;
+        }
+
+        .header-stars {
+            width: 100px;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="hero">
+        <img class="hero-image" src="{{ 'about_me_background_image.png' | asset_url }}" alt="About notebook background">
+
+        <!-- 🔥 Grouped Text + Image -->
+        <div class="ceo-wrapper">
+            <img class="ceo-image" src="{{ 'ACL_CEO_Headshot.png' | asset_url }}" alt="CEO Headshot">
+
+            <div class="ceo-name-wrapper">
+                <div class="ceo-intro-text">Hello, my name is</div>
+                <div class="ceo-intro-name">Ariel Cameron</div>
+            </div>
+
+            <!-- 🔥 Stars now to the RIGHT -->
+            <img class="header-stars" src="{{ 'header_stars.png' | asset_url }}" alt="header stars">
+
+            <h2>Business Birthday</h2>
+            <p>🎉 10/2024 🎈</p>
+        </div>
+    </section>
+</body>
+
+</html>

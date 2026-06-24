@@ -1,0 +1,15 @@
+<script>
+    // changes the image to display on top when you click on it
+        document.addEventListener('DOMContentLoaded', function () {
+            const productImages = document.querySelectorAll('.product-images img');
+            const topImage = document.querySelector('.product-images img:first-child');
+
+            productImages.forEach((image) => {
+                image.addEventListener('click', function () {
+                    topImage.src = image.src;
+                    // You can also update other attributes like alt text, etc.
+                });
+            });
+        });
+
+</script>

@@ -1,0 +1,292 @@
+{% comment %}
+=============================================================================
+FILE: product-grid-section.liquid
+LOCATION: Upload this to your Shopify theme's "Sections" folder
+PURPOSE: Displays a grid of products with hover image swap and zoom preview
+=============================================================================
+
+LIQUID BASICS YOU NEED TO KNOW:
+- {% %} = Liquid logic tags (for loops, if statements)
+- {{ }} = Output tags (displays content)
+- collection.products = All products in a collection
+- product.images[0] = First product image
+- product.images[1] = Second product image
+- | = Filters (modify the output)
+
+{% endcomment %}
+
+<div class="product-collection-wrapper">
+    <div class="product-container">
+
+        <!-- ===========================================
+         TOOLBAR: Grid Columns | Product Count | Sort By | Filter
+         =========================================== -->
+        <div class="product-toolbar">
+
+            <!-- LEFT: Grid Column Buttons (3 / 4 / 5 columns) -->
+            <div class="toolbar-section toolbar-grid-buttons">
+
+                <!-- 3-column button -->
+                <button class="grid-col-btn active" type="button" data-cols="3" title="3 columns"
+                    aria-label="Display 3 columns">
+                    <!-- 3x3 dot grid icon -->
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                        <rect x="0" y="0" width="4" height="4" />
+                        <rect x="6" y="0" width="4" height="4" />
+                        <rect x="12" y="0" width="4" height="4" />
+                        <rect x="0" y="6" width="4" height="4" />
+                        <rect x="6" y="6" width="4" height="4" />
+                        <rect x="12" y="6" width="4" height="4" />
+                        <rect x="0" y="12" width="4" height="4" />
+                        <rect x="6" y="12" width="4" height="4" />
+                        <rect x="12" y="12" width="4" height="4" />
+                    </svg>
+                </button>
+
+                <!-- 4-column button -->
+                <button class="grid-col-btn" type="button" data-cols="4" title="4 columns"
+                    aria-label="Display 4 columns">
+                    <!-- 4x4 dot grid icon -->
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                        <rect x="0" y="0" width="3" height="3" />
+                        <rect x="4.3" y="0" width="3" height="3" />
+                        <rect x="8.6" y="0" width="3" height="3" />
+                        <rect x="13" y="0" width="3" height="3" />
+                        <rect x="0" y="4.3" width="3" height="3" />
+                        <rect x="4.3" y="4.3" width="3" height="3" />
+                        <rect x="8.6" y="4.3" width="3" height="3" />
+                        <rect x="13" y="4.3" width="3" height="3" />
+                        <rect x="0" y="8.6" width="3" height="3" />
+                        <rect x="4.3" y="8.6" width="3" height="3" />
+                        <rect x="8.6" y="8.6" width="3" height="3" />
+                        <rect x="13" y="8.6" width="3" height="3" />
+                        <rect x="0" y="13" width="3" height="3" />
+                        <rect x="4.3" y="13" width="3" height="3" />
+                        <rect x="8.6" y="13" width="3" height="3" />
+                        <rect x="13" y="13" width="3" height="3" />
+                    </svg>
+                </button>
+
+                <!-- 5-column button -->
+                <button class="grid-col-btn" type="button" data-cols="5" title="5 columns"
+                    aria-label="Display 5 columns">
+                    <!-- 5x5 dot grid icon -->
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                        <rect x="0" y="0" width="2.4" height="2.4" />
+                        <rect x="3.4" y="0" width="2.4" height="2.4" />
+                        <rect x="6.8" y="0" width="2.4" height="2.4" />
+                        <rect x="10.2" y="0" width="2.4" height="2.4" />
+                        <rect x="13.6" y="0" width="2.4" height="2.4" />
+                        <rect x="0" y="3.4" width="2.4" height="2.4" />
+                        <rect x="3.4" y="3.4" width="2.4" height="2.4" />
+                        <rect x="6.8" y="3.4" width="2.4" height="2.4" />
+                        <rect x="10.2" y="3.4" width="2.4" height="2.4" />
+                        <rect x="13.6" y="3.4" width="2.4" height="2.4" />
+                        <rect x="0" y="6.8" width="2.4" height="2.4" />
+                        <rect x="3.4" y="6.8" width="2.4" height="2.4" />
+                        <rect x="6.8" y="6.8" width="2.4" height="2.4" />
+                        <rect x="10.2" y="6.8" width="2.4" height="2.4" />
+                        <rect x="13.6" y="6.8" width="2.4" height="2.4" />
+                        <rect x="0" y="10.2" width="2.4" height="2.4" />
+                        <rect x="3.4" y="10.2" width="2.4" height="2.4" />
+                        <rect x="6.8" y="10.2" width="2.4" height="2.4" />
+                        <rect x="10.2" y="10.2" width="2.4" height="2.4" />
+                        <rect x="13.6" y="10.2" width="2.4" height="2.4" />
+                        <rect x="0" y="13.6" width="2.4" height="2.4" />
+                        <rect x="3.4" y="13.6" width="2.4" height="2.4" />
+                        <rect x="6.8" y="13.6" width="2.4" height="2.4" />
+                        <rect x="10.2" y="13.6" width="2.4" height="2.4" />
+                        <rect x="13.6" y="13.6" width="2.4" height="2.4" />
+                    </svg>
+                </button>
+
+            </div>
+
+            <!-- CENTER: Product Count -->
+            <div class="toolbar-section toolbar-count">
+                <span class="product-count">{{ collection.products.size }} Products</span>
+            </div>
+
+            <!-- RIGHT: Sort By Dropdown -->
+            <div class="toolbar-section toolbar-sort">
+                <div class="custom-select" data-select="sort">
+                    <button class="select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                        <span class="select-value">Sort By</span>
+                        <svg class="select-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="select-dropdown" role="listbox">
+                        <div class="select-option" data-value="manual" role="option">Best Match</div>
+                        <div class="select-option" data-value="price-ascending" role="option">Price: Low to High</div>
+                        <div class="select-option" data-value="price-descending" role="option">Price: High to Low</div>
+                        <div class="select-option" data-value="created-descending" role="option">Newest</div>
+                        <div class="select-option" data-value="best-selling" role="option">Best Selling</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: Filter Button -->
+            <div class="toolbar-section toolbar-filter">
+                <button class="filter-button" type="button">
+                    <!-- Sliders icon -->
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        aria-hidden="true">
+                        <line x1="4" y1="21" x2="4" y2="14" />
+                        <line x1="4" y1="10" x2="4" y2="3" />
+                        <line x1="12" y1="21" x2="12" y2="12" />
+                        <line x1="12" y1="8" x2="12" y2="3" />
+                        <line x1="20" y1="21" x2="20" y2="16" />
+                        <line x1="20" y1="12" x2="20" y2="3" />
+                        <line x1="1" y1="14" x2="7" y2="14" />
+                        <line x1="9" y1="8" x2="15" y2="8" />
+                        <line x1="17" y1="16" x2="23" y2="16" />
+                    </svg>
+                    <span>Filter</span>
+                </button>
+            </div>
+
+        </div><!-- /.product-toolbar -->
+
+        <!-- ===========================================
+         PRODUCT GRID: All Products Display Here
+         =========================================== -->
+        {% paginate collection.products by section.settings.products_per_page %}
+         
+            <div class="product-grid" data-cols="3">
+
+            {% comment %}
+            LIQUID LOOP: This repeats for each product in your collection.
+            Everything between "for" and "endfor" repeats for every product.
+            {% endcomment %}
+
+            {% for product in collection.products %}
+
+            <div class="product-card">
+
+                <!-- Product Image Area -->
+                <div class="product-image-wrapper">
+                    <div class="product-image-inner">
+
+                        <!-- BADGES: New or Sale -->
+                        {% if product.tags contains 'new' %}
+                        <span class="product-badge badge-new">New</span>
+                        {% elsif product.compare_at_price > product.price %}
+                        {% assign discount = product.compare_at_price | minus: product.price | times: 100 | divided_by:
+                        product.compare_at_price %}
+                        <span class="product-badge badge-sale">-{{ discount }}%</span>
+                        {% endif %}
+
+                        <!-- Product Image Container -->
+                        <a href="{{ product.url }}" class="product-image-link">
+                            <div class="product-image-container" data-image-swap>
+
+                                {% if product.featured_image %}
+
+                                <!-- IMAGE 1: Primary/Default -->
+                                <img src="{{ product.featured_image | img_url: '600x600', crop: 'center' }}"
+                                    alt="{{ product.featured_image.alt | escape }}"
+                                    class="product-image product-image-primary active" loading="lazy" width="600"
+                                    height="600">
+
+                                <!-- IMAGE 2: Shown on hover (only if product has 2+ images) -->
+                                {% if product.images[1] %}
+                                <img src="{{ product.images[1] | img_url: '600x600', crop: 'center' }}"
+                                    alt="{{ product.images[1].alt | escape }}"
+                                    class="product-image product-image-secondary" loading="lazy" width="600"
+                                    height="600">
+                                {% endif %}
+
+                                {% else %}
+                                {{ 'product-1' | placeholder_svg_tag: 'product-image placeholder' }}
+                                {% endif %}
+
+                            </div>
+                        </a>
+
+                        <!-- ZOOM PREVIEW BOX: appears top-right on hover (only if 2+ images) -->
+                        {% if product.images[1] %}
+                        <div class="zoom-preview" data-zoom-preview>
+                            <div class="zoom-preview-image"
+                                style="background-image: url('{{ product.images[1] | img_url: '1200x1200', crop: 'center' }}');">
+                            </div>
+                        </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+
+                <!-- Product Info -->
+                <div class="product-info">
+
+                    {% if product.type != blank %}
+                    <p class="product-category">{{ product.type }}</p>
+                    {% endif %}
+
+                    <h3 class="product-title">
+                        <a href="{{ product.url }}">{{ product.title }}</a>
+                    </h3>
+
+                    <div class="product-price">
+                        {% if product.compare_at_price > product.price %}
+                        <span class="price-sale">From {{ product.price | money }}</span>
+                        <span class="price-original">{{ product.compare_at_price | money }}</span>
+                        {% else %}
+                        <span class="price-regular">
+                            {% if product.price_varies %}From {% endif %}{{ product.price | money }}
+                        </span>
+                        {% endif %}
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+            {% if collection.products.size == 0 %}
+            <div class="no-products">
+                <p>No products found in this collection.</p>
+            </div>
+            {% endif %}
+
+        </div><!-- /.product-grid -->
+{% render 'pagination', pagination: paginate %}
+
+{% endpaginate %}
+    </div>
+</div>
+
+{% schema %}
+{
+"name": "Product Grid",
+"settings": [
+{
+"type": "range",
+"id": "products_per_page",
+"min": 8,
+"max": 50,
+"step": 1,
+"default": 12,
+"label": "Products per page"
+},
+{
+"type": "select",
+"id": "default_columns",
+"options": [
+{ "value": "3", "label": "3 columns" },
+{ "value": "4", "label": "4 columns" },
+{ "value": "5", "label": "5 columns" }
+],
+"default": "3",
+"label": "Default column count"
+}
+],
+"presets": [
+{
+"name": "Product Grid"
+}
+]
+}
+{% endschema %}

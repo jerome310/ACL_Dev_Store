@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    @media only screen and (max-width: 600px) {
+  
+      /* Your CSS rules for screens up to 600px wide go here */
+      /* For example: */
+      .wrapper {
+        margin-top: 10% !important;
+      }
+    }
+    .wrapper {
+      position: relative;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      margin-top: 7%;
+    }
+  
+    .button {
+      display: block;
+      width: 40%;
+      height: 40px;
+      line-height: 40px;
+      font-size: 18px;
+      font-family: sans-serif;
+      text-decoration: none;
+      color: #333;
+      border: 2px solid #333;
+      letter-spacing: 2px;
+      text-align: center;
+      position: relative;
+      transition: all .35s;
+      border: 1px solid black;
+      border-radius: 6px;
+    }
+  
+    .button span {
+      position: relative;
+      z-index: 2;
+    }
+  
+    .button:after {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: linear-gradient(to right, #feb82b, #2387ff, #e561a1);
+      transition: all .35s;
+    }
+  
+    .button:hover {
+      color: #fff;
+    }
+  
+    .button:hover:after {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <button type="submit" class="button"><span class="text">Add to cart</span></button>
+  </div>
+</body>
+</html>
+

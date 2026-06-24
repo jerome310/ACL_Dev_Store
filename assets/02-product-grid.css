@@ -1,0 +1,595 @@
+/**
+ * =============================================================================
+ * FILE: product-grid.css
+ * LOCATION: Upload this to your Shopify theme's "Assets" folder
+ * PURPOSE: All styles for the product grid
+ * =============================================================================
+ */
+
+/* =============================================================================
+   MAIN CONTAINER
+   ============================================================================= */
+
+.product-collection-wrapper {
+    width: 100%;
+    background-color: #FFF1D5;
+    padding: 2rem 0;
+}
+
+.product-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* =============================================================================
+   TOOLBAR (Grid Columns | Product Count | Sort By | Filter)
+   ============================================================================= */
+
+.product-toolbar {
+    display: flex;
+    align-items: stretch;
+    border: 1px solid #EAD7A4;
+    height: 52px;
+    margin-bottom: 2rem;
+}
+
+/* Each section is separated by a right border */
+.toolbar-section {
+    display: flex;
+    align-items: center;
+    border-right: 1px solid #EAD7A4;
+}
+
+/* Last section has no right border */
+.toolbar-section:last-child {
+    border-right: none;
+}
+
+/* -----------------------------------------------
+   GRID COLUMN BUTTONS (left section)
+   ----------------------------------------------- */
+
+.toolbar-grid-buttons {
+    padding: 0 1.25rem;
+    gap: 1rem;
+}
+
+.grid-col-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: #d1d5db;
+    /* light gray when inactive */
+    transition: color 0.2s ease;
+    line-height: 0;
+}
+
+.grid-col-btn:hover {
+    color: #6b7280;
+}
+
+/* Active (selected) column button */
+.grid-col-btn.active {
+    color: #111827;
+}
+
+/* -----------------------------------------------
+   PRODUCT COUNT (center section — fills remaining space)
+   ----------------------------------------------- */
+
+.toolbar-count {
+    flex: 1;
+    justify-content: center;
+    border-right: 1px solid #e5e7eb;
+}
+
+.product-count {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #374151;
+    font-weight: 500;
+    padding-left: 140px;
+}
+
+/* -----------------------------------------------
+   SORT BY (right section)
+   ----------------------------------------------- */
+
+.toolbar-sort {
+    padding: 0 1.5rem;
+}
+
+/* -----------------------------------------------
+   FILTER BUTTON (rightmost section)
+   ----------------------------------------------- */
+
+.toolbar-filter {
+    padding: 0;
+    border-right: none;
+}
+
+.filter-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 1.5rem;
+    height: 100%;
+    background: none;
+    border: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #374151;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    white-space: nowrap;
+}
+
+.filter-button:hover {
+    background-color: #f9fafb;
+    color: #111827;
+}
+
+/* =============================================================================
+   CUSTOM DROPDOWN
+   ============================================================================= */
+
+.custom-select {
+    position: relative;
+}
+
+.select-trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: none;
+    border: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #374151;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+}
+
+.select-trigger:hover {
+    color: #111827;
+}
+
+.select-arrow {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+/* Rotate arrow when dropdown is open */
+.custom-select.active .select-arrow {
+    transform: rotate(180deg);
+}
+
+/* Dropdown Menu */
+.select-dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    min-width: 200px;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+    padding: 0.25rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+    z-index: 50;
+}
+
+/* Show dropdown when active */
+.custom-select.active .select-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Dropdown Options */
+.select-option {
+    padding: 0.6rem 1rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #374151;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.select-option:hover {
+    background-color: #f9fafb;
+    color: #111827;
+}
+
+.select-option.selected {
+    font-weight: 600;
+    color: #111827;
+}
+
+/* =============================================================================
+   PRODUCT GRID
+   ============================================================================= */
+
+.product-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+/* Default: 3 columns */
+.product-grid[data-cols="3"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* 4 columns */
+.product-grid[data-cols="4"] {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* 5 columns */
+.product-grid[data-cols="5"] {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+/* Responsive: tablet */
+@media (max-width: 1024px) {
+    .product-grid[data-cols="5"] {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .product-grid[data-cols="4"] {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .product-grid[data-cols="3"] {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Responsive: mobile */
+@media (max-width: 640px) {
+
+    .product-count {
+            padding-left: 0;
+        }
+
+    .product-grid[data-cols="3"],
+    .product-grid[data-cols="4"],
+    .product-grid[data-cols="5"] {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* =============================================================================
+   PRODUCT CARD
+   ============================================================================= */
+
+.product-card {
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.4s ease forwards;
+}
+
+/* Stagger animation for each card */
+.product-card:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+.product-card:nth-child(2) {
+    animation-delay: 0.10s;
+}
+
+.product-card:nth-child(3) {
+    animation-delay: 0.15s;
+}
+
+.product-card:nth-child(4) {
+    animation-delay: 0.20s;
+}
+
+.product-card:nth-child(5) {
+    animation-delay: 0.25s;
+}
+
+.product-card:nth-child(6) {
+    animation-delay: 0.30s;
+}
+
+.product-card:nth-child(7) {
+    animation-delay: 0.35s;
+}
+
+.product-card:nth-child(8) {
+    animation-delay: 0.40s;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =============================================================================
+   PRODUCT IMAGE AREA
+   ============================================================================= */
+
+.product-image-wrapper {
+    position: relative;
+    background-color: #f3f4f6;
+    border-radius: 0.5rem;
+    overflow: visible;
+    margin-bottom: 1rem;
+    aspect-ratio: 1 / 1;
+}
+
+.product-image-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.product-image-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.product-image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* =============================================================================
+   PRODUCT IMAGES (Primary & Secondary)
+   ============================================================================= */
+
+.product-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.4s ease;
+    opacity: 0;
+}
+
+.product-image.active {
+    opacity: 1;
+}
+
+.product-image-primary {
+    position: relative;
+    z-index: 1;
+}
+
+.product-image-secondary {
+    z-index: 2;
+}
+
+.product-card:hover .product-image-secondary {
+    opacity: 1;
+}
+
+.product-card:hover .product-image-primary {
+    opacity: 0;
+}
+
+.product-card:hover .product-image-secondary {
+    opacity: 1;
+}
+
+/* =============================================================================
+   ZOOM PREVIEW BOX (Top Right Corner)
+   ============================================================================= */
+
+.zoom-preview {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 8rem;
+    height: 8rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border: 2px solid #ffffff;
+    z-index: 20;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+}
+
+.zoom-preview.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.zoom-preview-image {
+    width: 100%;
+    height: 100%;
+    background-size: 250%;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-position 0.1s ease-out;
+}
+
+/* =============================================================================
+   PRODUCT BADGES (Sale & New)
+   ============================================================================= */
+
+.product-badge {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #ffffff;
+    z-index: 10;
+}
+
+.badge-sale {
+    background-color: #ef4444;
+}
+
+.badge-new {
+    background-color: #16a34a;
+}
+
+/* =============================================================================
+   PRODUCT INFO
+   ============================================================================= */
+
+.product-info {
+    padding: 0;
+}
+
+.product-category {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    margin-bottom: 0.25rem;
+    text-transform: capitalize;
+}
+
+.product-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #111827;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.product-title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.product-card:hover .product-title a {
+    color: #6b7280;
+}
+
+/* =============================================================================
+   PRODUCT PRICE
+   ============================================================================= */
+
+.product-price {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.price-regular {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #111827;
+}
+
+.price-sale {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #dc2626;
+}
+
+.price-original {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    text-decoration: line-through;
+}
+
+/* =============================================================================
+   NO PRODUCTS MESSAGE
+   ============================================================================= */
+
+.no-products {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem 1rem;
+}
+
+.no-products p {
+    font-size: 1rem;
+    color: #6b7280;
+}
+
+/* =============================================================================
+   MOBILE RESPONSIVE
+   ============================================================================= */
+
+@media (max-width: 640px) {
+
+    /* Toolbar wraps to two rows on mobile */
+    .product-toolbar {
+        flex-wrap: wrap;
+        height: auto;
+    }
+
+    /* Grid buttons take full width on row 1 */
+    .toolbar-grid-buttons {
+        order: 1;
+        flex: 1;
+        border-right: 1px solid #e5e7eb;
+        border-bottom: 1px solid #e5e7eb;
+        padding: 0.75rem 1rem;
+        height: 48px;
+    }
+
+    /* Count takes flex-1 on row 1 */
+    .toolbar-count {
+        order: 2;
+        flex: 1;
+        border-right: none;
+        border-bottom: 1px solid #e5e7eb;
+        height: 48px;
+    }
+
+    /* Sort and filter on row 2 */
+    .toolbar-sort {
+        order: 3;
+        flex: 1;
+        justify-content: center;
+        height: 48px;
+        border-right: 1px solid #e5e7eb;
+        border-bottom: none;
+    }
+
+    .toolbar-filter {
+        order: 4;
+        flex: 1;
+        height: 48px;
+    }
+
+    .filter-button {
+        justify-content: center;
+        width: 100%;
+    }
+
+    /* Smaller zoom preview on mobile */
+    .zoom-preview {
+        width: 6rem;
+        height: 6rem;
+    }
+}

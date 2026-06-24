@@ -1,0 +1,43 @@
+<section class="page-width">
+    <h1 class="text-3xl font-bold text-center mb-8" style="padding: 50px 0;">
+        {{ collection.title }} 🏷️
+    </h1>
+
+    {% if collection.products.size > 0 %}
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4" style="margin: 25px 0;">
+
+        {% for product in collection.products %}
+        <a href="{{ product.url }}" class="group">
+
+            <!-- CARD (now smaller) -->
+            <div class="flex flex-col w-full max-w-[300px] mx-auto">
+
+                <!-- Image -->
+                <div class="overflow-hidden rounded-t-2xl bg-gray-100">
+                    {% if product.featured_image %}
+                    <img src="{{ product.featured_image | image_url: width: 900 }}" alt="{{ product.title }}"
+                        class="w-full object-cover transition duration-300 group-hover:scale-105">
+                    {% endif %}
+                </div>
+
+                <!-- Bottom Card -->
+                <div style="background-color: #ffffff75"
+                    class="text-center bg-[#f6f6f6] py-2 px-3 rounded-b-2xl text-black">
+                    <p class="text-sm">
+                        {{ product.title }}
+                    </p>
+                    <p class="text-xs py-1">
+                        {{ product.price | money }}
+                    </p>
+                </div>
+
+            </div>
+
+        </a>
+        {% endfor %}
+
+    </div>
+    {% else %}
+    <p class="text-center">No products found in this collection.</p>
+    {% endif %}
+</section>

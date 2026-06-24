@@ -1,0 +1,128 @@
+<button class="button">
+    <div>
+        Shop Now
+    </div>
+</button>
+
+<style>
+{% comment %} Font-Family {% endcomment %}
+@import
+url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
+@property --border-angle-1 {
+	syntax: "<angle>";
+	inherits: true;
+	initial-value: 0deg;
+}
+
+@property --border-angle-2 {
+	syntax: "<angle>";
+	inherits: true;
+	initial-value: 90deg;
+}
+
+@property --border-angle-3 {
+	syntax: "<angle>";
+	inherits: true;
+	initial-value: 180deg;
+}
+
+
+/* sRGB color. */
+:root {
+	--bright-blue: rgb(35, 135, 255);
+	--bright-yellow: rgb(254, 184, 43);
+	--bright-pink: rgb(229, 97, 161);
+	--background: white;
+	--foreground: black;
+	--border-size: 2px;
+	--border-radius: 999px;
+}
+
+/* Display-P3 color, when supported. */
+@supports (color: color(display-p3 1 1 1)) {
+	:root {
+		--bright-blue: color(display-p3 0.14, 0.53, 1);
+		--bright-yellow: color(display-p3 0.99, 0.72, 0.17);
+		--bright-pink: color(display-p3 0.89, 0.38, 0.63);
+	}
+}
+
+@keyframes rotateBackground {
+	to { --border-angle-1: 360deg; }
+}
+
+@keyframes rotateBackground2 {
+	to { --border-angle-2: -270deg; }
+}
+
+@keyframes rotateBackground3 {
+	to { --border-angle-3: 540deg; }
+}
+
+body {
+	background: var(--background);
+	color: var(--foreground);
+	min-height: 100dvh;
+	/* display: grid; */
+	place-content: center;
+	margin: 0;
+	font-family: "comic";
+}
+
+.button {
+    margin: 70px auto 50px;
+	--border-angle-1: 0deg;
+	--border-angle-2: 90deg;
+	--border-angle-3: 180deg;
+	color: inherit;
+	font-size: 22px;
+	font-family: "comic";
+	border: 0;
+	padding: var(--border-size);
+	display: flex;
+	width: max-content;
+	border-radius: var(--border-radius);
+	background-color: transparent;
+	background-image: conic-gradient(
+			from var(--border-angle-1) at 10% 15%,
+			transparent,
+			var(--bright-blue) 10%,
+			transparent 30%,
+			transparent
+		),
+		conic-gradient(
+			from var(--border-angle-2) at 70% 60%,
+			transparent,
+			var(--bright-yellow) 10%,
+			transparent 60%,
+			transparent
+		),
+		conic-gradient(
+			from var(--border-angle-3) at 50% 20%,
+			transparent,
+			var(--bright-pink) 10%,
+			transparent 50%,
+			transparent
+		);
+	animation: 
+		rotateBackground 3s linear infinite,
+		rotateBackground2 8s linear infinite,
+		rotateBackground3 13s linear infinite;
+}
+
+/* Change this background to transparent to see how the gradient works */
+.button div {
+	background: var(--background); 
+	padding: 20px 40px;
+	border-radius: calc(var(--border-radius) - var(--border-size));
+	color: var(--foreground);
+}
+
+@font-face {
+	font-family: "comic";
+	font-weight: normal;
+	src: url("https://assets.codepen.io/240751/Aspekta-300.woff2") format("woff2");
+}
+
+</style>
