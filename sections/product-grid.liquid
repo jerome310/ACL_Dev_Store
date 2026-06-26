@@ -129,7 +129,7 @@ LIQUID BASICS YOU NEED TO KNOW:
 
             <!-- RIGHT: Filter Button -->
             <div class="toolbar-section toolbar-filter">
-                <button class="filter-button" type="button">
+                <button class="filter-button" type="button" id="openFilters">
                     <!-- Sliders icon -->
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         aria-hidden="true">
@@ -148,6 +148,53 @@ LIQUID BASICS YOU NEED TO KNOW:
             </div>
 
         </div><!-- /.product-toolbar -->
+
+        <!-- =========================
+        FILTER PANEL (ADDED)
+        ========================= -->
+        
+        <div id="filterPanel" class="filter-panel">
+        
+            <!-- HEADER -->
+        
+            <div class="filter-header">
+                <h2>Filters</h2>
+        
+                <div class="filter-header-actions">
+                    <button id="clearFilters" class="clear-btn">Clear all</button>
+                    <button id="closeFilters" class="close-btn">✕</button>
+                </div>
+        
+            </div>
+        
+            <!-- CONTENT -->
+        
+            <div class="filter-content">
+        
+                <div id="filter-product-type"></div>
+                <div class="divider"></div>
+        
+                <div id="filter-color"></div>
+                <div class="divider"></div>
+        
+                <div id="filter-availability"></div>
+                <div class="divider"></div>
+        
+                <div id="filter-price"></div>
+                
+        
+            </div>
+        
+            <!-- FOOTER -->
+        
+            <div class="filter-footer">
+                <button id="applyFilters">
+                    View Results <span id="resultCount">(20)</span>
+                </button>
+            </div>
+        
+        </div>
+
 
         <!-- ===========================================
          PRODUCT GRID: All Products Display Here

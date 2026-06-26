@@ -220,3 +220,52 @@
     }
   }
 })();
+
+/* =========================================
+FILTER PANEL TOGGLE (OPEN / CLOSE)
+========================================= */
+
+document.addEventListener('DOMContentLoaded', function () {
+
+const filterPanel = document.getElementById('filterPanel');
+const openBtn = document.getElementById('openFilters');
+const closeBtn = document.getElementById('closeFilters');
+const clearBtn = document.getElementById('clearFilters');
+
+if (!filterPanel) return;
+
+/* OPEN PANEL */
+if (openBtn) {
+openBtn.addEventListener('click', function () {
+filterPanel.classList.add('active');
+});
+}
+
+/* CLOSE PANEL */
+if (closeBtn) {
+closeBtn.addEventListener('click', function () {
+filterPanel.classList.remove('active');
+});
+}
+
+/* CLICK OUTSIDE TO CLOSE (optional but nice UX) */
+document.addEventListener('click', function (e) {
+if (
+filterPanel.classList.contains('active') &&
+!filterPanel.contains(e.target) &&
+!openBtn.contains(e.target)
+) {
+filterPanel.classList.remove('active');
+}
+});
+
+/* CLEAR BUTTON (for now just UI reset) */
+if (clearBtn) {
+clearBtn.addEventListener('click', function () {
+console.log('Clear filters clicked');
+// You’ll hook real filter logic here later
+});
+}
+
+});
+
