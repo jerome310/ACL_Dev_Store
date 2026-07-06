@@ -269,3 +269,88 @@ console.log('Clear filters clicked');
 
 });
 
+
+document.addEventListener("DOMContentLoaded", () => {
+  const products = document.querySelectorAll(".product-card");
+
+  const filters = {
+    type: [],
+    colors: [],
+    maxPrice: null,
+    available: false,
+  };
+
+  // 🧩 GET INPUTS
+  const typeInputs = document.querySelectorAll("[data-filter='type']");
+  const colorInputs = document.querySelectorAll("[data-filter='color']");
+  const priceInput = document.querySelector("[data-filter='price']");
+  const availableInput = document.querySelector("[data-filter='available']");
+
+  // 🎯 UPDATE FILTER STATE
+  function updateFilters() {
+    filters.type = Array.from(typeInputs)
+      .filter((i) => i.checked)
+      .map((i) => i.value);
+
+    filters.colors = Array.from(colorInputs)
+      .filter((i) => i.checked)
+      .map((i) => i.value);
+
+    filters.maxPrice = priceInput ? Number(priceInput.value) : null;
+    filters.available = availableInput ? availableInput.checked : false;
+
+    applyFilters();
+  }
+
+  // 🚀 MAIN FILTER FUNCTION
+  function applyFilters() {
+    products.forEach((product) => {
+      const type = product.dataset.type;
+      const price = Number(product.dataset.price);
+      const available = product.dataset.available === "true";
+      const colors = product.dataset.colors
+        ? product.dataset.colors.split(",")
+        : [];
+
+      let show = true;
+
+      // TYPE FILTER
+      if (filters.type.length && !filters.type.includes(type)) {
+        show = false;
+      }
+
+      // COLOR FILTER
+      if (
+        filters.colors.length &&
+        !filters.colors.some((color) => colors.includes(color))
+      ) {
+        show = false;
+      }
+
+      // PRICE FILTER
+      if (filters.maxPrice !== null && price > filters.maxPrice) {
+        show = false;
+      }
+
+      // AVAILABILITY FILTER
+      if (filters.available && !available) {
+        show = false;
+      }
+
+      product.style.display = show ? "block" : "none";
+    });
+  }
+
+  // 🎧 EVENT LISTENERS
+  [...typeInputs, ...colorInputs].forEach((input) =>
+    input.addEventListener("change", updateFilters),
+  );
+
+  if (priceInput) {
+    priceInput.addEventListener("input", updateFilters);
+  }
+
+  if (availableInput) {
+    availableInput.addEventListener("change", updateFilters);
+  }
+});

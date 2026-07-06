@@ -152,47 +152,93 @@ LIQUID BASICS YOU NEED TO KNOW:
         <!-- =========================
         FILTER PANEL (ADDED)
         ========================= -->
-        
+
         <div id="filterPanel" class="filter-panel">
-        
+
             <!-- HEADER -->
-        
+
             <div class="filter-header">
                 <h2>Filters</h2>
-        
+
                 <div class="filter-header-actions">
                     <button id="clearFilters" class="clear-btn">Clear all</button>
                     <button id="closeFilters" class="close-btn">✕</button>
                 </div>
-        
+
             </div>
-        
-            <!-- CONTENT -->
-        
-            <div class="filter-content">
-        
-                <div id="filter-product-type"></div>
-                <div class="divider"></div>
-        
-                <div id="filter-color"></div>
-                <div class="divider"></div>
-        
-                <div id="filter-availability"></div>
-                <div class="divider"></div>
-        
-                <div id="filter-price"></div>
+
+            <!-- PRODUCT TYPE -->
+            <div id="filter-product-type" class="filter-group">
+            
+                <!-- HEADER (accordion trigger) -->
+                <div class="filter-group-header">
+                    <h4>PRODUCT TYPE</h4>
                 
-        
+                    <svg class="chevron" width="16" height="16" viewBox="0 0 24 24">
+                        <polyline points="6 9 12 15 18 9" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+            
+                <!-- LIST -->
+                <div class="filter-list">
+            
+                    {% assign types = collection.products | map: 'type' | uniq %}
+            
+                    {% for type in types %}
+                    {% if type != blank %}
+            
+                    <label class="filter-item">
+                        <input type="checkbox" value="{{ type | handle }}" data-filter="type">
+                        <span>{{ type }}</span>
+                    </label>
+            
+                    {% endif %}
+                    {% endfor %}
+            
+                </div>
+            
             </div>
-        
+            
+            <!-- TAG FILTER (you can rename this if you want) -->
+            <div id="filter-color" class="filter-group">
+            {% assign tags_array = collection.all_tags %}
+            
+            {% for tag in tags_array %}
+            {% if tag != blank %}
+            <label>
+                <input type="checkbox" value="{{ tag | downcase }}" data-filter="tags">
+                {{ tag }}
+            </label>
+            {% endif %}
+            {% endfor %}
+            </div>
+            
+            <!-- AVAILABILITY -->
+            <div id="filter-availability">
+                <h4>Availability</h4>
+            
+                <label>
+                    <input type="checkbox" value="true" data-filter="available">
+                    In Stock Only
+                </label>
+            </div>
+            
+            <!-- PRICE -->
+            <div id="filter-price">
+                <h4>Max Price</h4>
+            
+                <input type="range" min="0" max="200" value="200" data-filter="price">
+            </div>
+
             <!-- FOOTER -->
-        
+
             <div class="filter-footer">
                 <button id="applyFilters">
                     View Results <span id="resultCount">(20)</span>
                 </button>
             </div>
-        
+
         </div>
 
 
@@ -200,8 +246,8 @@ LIQUID BASICS YOU NEED TO KNOW:
          PRODUCT GRID: All Products Display Here
          =========================================== -->
         {% paginate collection.products by section.settings.products_per_page %}
-         
-            <div class="product-grid" data-cols="3">
+
+        <div class="product-grid" data-cols="3">
 
             {% comment %}
             LIQUID LOOP: This repeats for each product in your collection.
@@ -210,7 +256,8 @@ LIQUID BASICS YOU NEED TO KNOW:
 
             {% for product in collection.products %}
 
-            <div class="product-card">
+            <div class="product-card" data-type="{{ product.type | handle }}" data-price="{{ product.price | divided_by: 100 }}"
+                data-available="{{ product.available }}" data-tags="{{ product.tags | join: ',' | downcase }}">
 
                 <!-- Product Image Area -->
                 <div class="product-image-wrapper">
@@ -299,9 +346,9 @@ LIQUID BASICS YOU NEED TO KNOW:
             {% endif %}
 
         </div><!-- /.product-grid -->
-{% render 'pagination', pagination: paginate %}
+        {% render 'pagination', pagination: paginate %}
 
-{% endpaginate %}
+        {% endpaginate %}
     </div>
 </div>
 
